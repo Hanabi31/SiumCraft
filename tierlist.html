@@ -139,6 +139,30 @@ function ekle(){
   document.getElementById("players").appendChild(div);
 }
 </script>
+window.onload = function(){
+  let saved = localStorage.getItem("tierlist");
+  if(!saved) return;
+
+  let data = JSON.parse(saved);
+  let zones = document.querySelectorAll(".dropzone");
+
+  data.forEach((zone, i)=>{
+    zone.forEach(player=>{
+      let div = document.createElement("div");
+      div.className="player";
+      div.id="p"+Date.now()+Math.random();
+      div.draggable=true;
+      div.ondragstart=drag;
+
+      div.innerHTML = `
+      <img src="https://mc-heads.net/avatar/${player.nick}">
+      <br>${player.nick}
+      `;
+
+      zones[i].appendChild(div);
+    });
+  });
+}
 
 </body>
 </html>
