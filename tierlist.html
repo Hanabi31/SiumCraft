@@ -2,93 +2,142 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Tier List PRO</title>
+<title>SiumCraft Tier List</title>
 
 <style>
-body { background:#0d0d0d; color:white; font-family:Arial; }
-.row { display:flex; margin:10px; }
-.label { width:80px; display:flex; justify-content:center; align-items:center; font-weight:bold; }
-.s {background:red;} .a {background:orange;} .b {background:yellow;color:black;} .c {background:green;} .d {background:blue;}
-.dropzone { flex:1; min-height:70px; background:#111; display:flex; flex-wrap:wrap; padding:10px; }
-.player { display:flex; align-items:center; background:#222; margin:5px; padding:5px; border-radius:8px; cursor:grab; }
-.player img { width:25px; margin-right:5px; }
-button { margin:10px; padding:10px; }
+body{
+  background:#0f172a;
+  color:white;
+  font-family:sans-serif;
+}
+
+h1{
+  text-align:center;
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+}
+
+.tier{
+  display:flex;
+  margin:10px 0;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.label{
+  width:80px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+}
+
+.dropzone{
+  flex:1;
+  min-height:80px;
+  display:flex;
+  flex-wrap:wrap;
+  padding:10px;
+}
+
+.S{background:#ef4444;}
+.A{background:#f97316;}
+.B{background:#eab308;}
+.C{background:#22c55e;}
+
+.player{
+  background:#1e293b;
+  padding:5px;
+  margin:5px;
+  border-radius:8px;
+  cursor:grab;
+  text-align:center;
+}
+
+.player img{
+  width:40px;
+  height:40px;
+  border-radius:6px;
+}
+
+input,button{
+  padding:10px;
+  margin:5px;
+  border:none;
+  border-radius:8px;
+}
 </style>
 </head>
 
 <body>
 
-<h1>🔥 Tier List</h1>
+<h1>🔥 SiumCraft Tier List</h1>
 
-<div class="row"><div class="label s">S</div><div class="dropzone" id="S" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
-<div class="row"><div class="label a">A</div><div class="dropzone" id="A" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
-<div class="row"><div class="label b">B</div><div class="dropzone" id="B" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
-<div class="row"><div class="label c">C</div><div class="dropzone" id="C" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
-<div class="row"><div class="label d">D</div><div class="dropzone" id="D" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
+<div class="container">
 
-<h2>Oyuncu ekle</h2>
-<input id="nick">
+<input type="text" id="nick" placeholder="Oyuncu adı">
 <button onclick="ekle()">Ekle</button>
-<button onclick="linkOlustur()">Link oluştur</button>
 
-<h2>Oyuncular</h2>
-<div id="players"></div>
+<h3>Oyuncular</h3>
+<div id="players" class="dropzone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+<div class="tier">
+<div class="label S">S</div>
+<div class="dropzone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+</div>
+
+<div class="tier">
+<div class="label A">A</div>
+<div class="dropzone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+</div>
+
+<div class="tier">
+<div class="label B">B</div>
+<div class="dropzone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+</div>
+
+<div class="tier">
+<div class="label C">C</div>
+<div class="dropzone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+</div>
+
+</div>
 
 <script>
-function allowDrop(e){e.preventDefault();}
-function drag(e){e.dataTransfer.setData("id", e.target.id);}
+function allowDrop(e){
+  e.preventDefault();
+}
+
+function drag(e){
+  e.dataTransfer.setData("id", e.target.id);
+}
 
 function drop(e){
- e.preventDefault();
- let el = document.getElementById(e.dataTransfer.getData("id"));
- e.target.appendChild(el);
+  e.preventDefault();
+  let id = e.dataTransfer.getData("id");
+  let el = document.getElementById(id);
+  e.target.appendChild(el);
 }
 
 function ekle(){
- let nick = document.getElementById("nick").value;
- let div = document.createElement("div");
- div.className="player";
- div.id="p"+Date.now();
- div.draggable=true;
- div.ondragstart=drag;
+  let nick = document.getElementById("nick").value;
 
- div.innerHTML=`<img src="https://mc-heads.net/avatar/${nick}">${nick}`;
- document.getElementById("players").appendChild(div);
+  let div = document.createElement("div");
+  div.className="player";
+  div.id="p"+Date.now();
+  div.draggable=true;
+  div.ondragstart=drag;
+
+  div.innerHTML = `
+  <img src="https://mc-heads.net/avatar/${nick}">
+  <br>${nick}
+  `;
+
+  document.getElementById("players").appendChild(div);
 }
-
-function veriAl(){
- let data={};
- ["S","A","B","C","D","players"].forEach(id=>{
-   data[id]=document.getElementById(id).innerHTML;
- });
- return data;
-}
-
-function linkOlustur(){
- let data = JSON.stringify(veriAl());
- let encoded = btoa(unescape(encodeURIComponent(data)));
- let link = location.origin + location.pathname + "?data=" + encoded;
-
- prompt("Link:", link);
-}
-
-function yukle(){
- let params = new URLSearchParams(location.search);
- let data = params.get("data");
- if(!data) return;
-
- let json = JSON.parse(decodeURIComponent(escape(atob(data))));
- for(let k in json){
-   document.getElementById(k).innerHTML = json[k];
- }
-
- document.querySelectorAll(".player").forEach(el=>{
-   el.draggable=true;
-   el.ondragstart=drag;
- });
-}
-
-window.onload=yukle;
 </script>
 
 </body>
