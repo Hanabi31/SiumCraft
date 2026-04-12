@@ -1,91 +1,104 @@
 <!DOCTYPE html><html>
 <head>
-<title>Minecraft Tier List</title>
-<style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CraftSium.com</title><style>
 body {
-    background: #0b1220;
-    color: white;
+    margin: 0;
     font-family: Arial;
-}.container {
-width: 90%;
-margin: auto;
+    background: #0b0f1a;
+    color: white;
 }
 
+/* ÜST BAR */
+.header {
+    background: black;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.menu-btn {
+    font-size: 25px;
+    cursor: pointer;
+}
+
+/* YAN MENÜ */
+.sidebar {
+    position: fixed;
+    left: -250px;
+    top: 0;
+    width: 250px;
+    height: 100%;
+    background: black;
+    transition: 0.3s;
+    padding-top: 20px;
+}
+
+.sidebar a {
+    display: block;
+    padding: 15px;
+    color: white;
+    text-decoration: none;
+}
+
+.sidebar a:hover {
+    background: #222;
+}
+
+/* HERO */
+.hero {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.hero h1 {
+    font-size: 35px;
+}
+
+.highlight {
+    color: yellow;
+}
+
+/* BUTTON */
+.btn {
+    background: yellow;
+    color: black;
+    padding: 10px 20px;
+    border-radius: 10px;
+    display: inline-block;
+    margin-top: 15px;
+}
+
+/* CARD */
 .card {
-background: #111a2b;
-padding: 15px;
-margin: 15px 0;
-border-radius: 15px;
-display: flex;
-align-items: center;
+    background: #111a2b;
+    margin: 15px;
+    padding: 15px;
+    border-radius: 15px;
 }
-
-.rank {
-font-size: 30px;
-font-weight: bold;
-margin-right: 15px;
-color: gold;
+</style></head><body><!-- HEADER --><div class="header">
+<span class="menu-btn" onclick="openMenu()">☰</span>
+<div>My Server</div>
+</div><!-- SIDEBAR --><div id="menu" class="sidebar">
+<a href="#">Anasayfa</a>
+<a href="#">Oyunlar</a>
+<a href="#">Mağaza</a>
+<a href="#">Destek</a>
+</div><!-- HERO --><div class="hero">
+<h1>CRAFT <span class="highlight">LIME</span></h1>
+<p>En iyi Minecraft sunucusu</p>
+<div class="btn">IP: play.SiumCraft.com</div>
+</div><!-- CONTENT --><div class="card">
+<h2>Bilgi</h2>
+<p>Sunucu hakkında bilgiler buraya</p>
+</div><script>
+function openMenu() {
+    let menu = document.getElementById("menu");
+    if(menu.style.left === "0px"){
+        menu.style.left = "-250px";
+    } else {
+        menu.style.left = "0px";
+    }
 }
-
-.skin {
-width: 60px;
-height: 60px;
-margin-right: 15px;
-}
-
-.info {
-flex: 1;
-}
-
-.name {
-font-size: 20px;
-}
-
-.region {
-padding: 5px 10px;
-border-radius: 8px;
-font-size: 12px;
-}
-
-.eu { background: green; }
-.na { background: red; }
-
-.tiers {
-margin-top: 5px;
-}
-
-.badge {
-background: #222;
-padding: 5px 8px;
-border-radius: 6px;
-margin-right: 5px;
-display: inline-block;
-}
-</style>
-
-</head><body><div class="container">
-<h1>Minecraft EU Tier List</h1><div class="card">
-<div class="rank">#1</div>
-<img class="skin" src="https://mc-heads.net/avatar/Notch">
-<div class="info">
-<div class="name">ItzReal...</div>
-<div class="tiers">
-<span class="badge">HT3</span>
-<span class="badge">HT1</span>
-<span class="badge">LT2</span>
-</div>
-</div>
-<div class="region eu">EU</div>
-</div><div class="card">
-<div class="rank">#2</div>
-<img class="skin" src="https://mc-heads.net/avatar/Herobrine">
-<div class="info">
-<div class="name">coldified</div>
-<div class="tiers">
-<span class="badge">LT1</span>
-<span class="badge">HT2</span>
-</div>
-</div>
-<div class="region na">NA</div>
-</div></div></body>
+</script></body>
 </html>
