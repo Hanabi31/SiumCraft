@@ -1,38 +1,185 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SiumCraft</title>
-<link rel="stylesheet" href="style.css">
+
+<style>
+body {
+  margin:0;
+  font-family:Arial;
+  background: url('https://images.unsplash.com/photo-1605902711622-cfb43c44367f') no-repeat center center/cover;
+  color:white;
+}
+
+/* overlay */
+.overlay {
+  background:rgba(0,0,0,0.7);
+  min-height:100vh;
+}
+
+/* NAVBAR */
+.navbar {
+  background:#111;
+  padding:15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo {
+  color:orange;
+  font-size:22px;
+  font-weight:bold;
+}
+
+/* MENU */
+.menu {
+  display:flex;
+}
+
+.menu a {
+  color:white;
+  margin-left:15px;
+  text-decoration:none;
+}
+
+.menu a:hover {
+  color:orange;
+}
+
+/* MOBILE MENU */
+.menu-btn {
+  display:none;
+  font-size:25px;
+}
+
+.mobile-menu {
+  display:none;
+  flex-direction:column;
+  background:#111;
+  padding:10px;
+}
+
+.mobile-menu a {
+  padding:10px;
+  border-bottom:1px solid #222;
+  color:white;
+  text-decoration:none;
+}
+
+/* HERO */
+.hero {
+  text-align:center;
+  padding:100px 20px;
+  animation:fade 2s;
+}
+
+@keyframes fade {
+  from {opacity:0; transform:translateY(20px);}
+  to {opacity:1; transform:translateY(0);}
+}
+
+.hero h1 {
+  font-size:40px;
+}
+
+.hero p {
+  color:#ccc;
+}
+
+/* BUTTON */
+.btn {
+  background:orange;
+  padding:15px 25px;
+  border:none;
+  border-radius:10px;
+  font-size:16px;
+  margin-top:20px;
+  cursor:pointer;
+}
+
+/* CARD */
+.card {
+  background:rgba(0,0,0,0.8);
+  margin:20px;
+  padding:20px;
+  border-radius:10px;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .menu {display:none;}
+  .menu-btn {display:block;}
+}
+</style>
+
 </head>
 
 <body>
 
-<div class="header">
-<span class="menu-btn" onclick="toggleMenu()">☰</span>
-<h2>SiumCraft</h2>
+<div class="overlay">
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="logo">🔥 SiumCraft</div>
+
+  <div class="menu">
+    <a href="index.html">Ana Sayfa</a>
+    <a href="#">Oyunlar</a>
+    <a href="#">Mağaza</a>
+    <a href="support.html">Destek</a>
+  </div>
+
+  <div class="menu-btn" onclick="toggleMenu()">☰</div>
 </div>
 
-<div id="menu" class="sidebar">
-<a href="index.html">🏠 Anasayfa</a>
-<a href="oyunlar.html">🎮 Oyunlar</a>
-<a href="magaza.html">🛒 Mağaza</a>
-<a href="destek.html">🛠 Destek</a>
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Ana Sayfa</a>
+  <a href="#">Oyunlar</a>
+  <a href="#">Mağaza</a>
+  <a href="support.html">Destek</a>
 </div>
-  
-<div class="hero"> 
-<a href="support.html">Destek</a>
-<h1>SIUMCRAFT</h1>
-<p>Türkiye'nin en iyi Minecraft sunucusu</p>
-<button class="btn">IP: play.siumcraft.com</button>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>SiumCraft Sunucusuna Hoşgeldin</h1>
+  <p>En iyi Minecraft PvP deneyimi</p>
+
+  <button class="btn" onclick="copyIP()">Sunucu IP: siumcraft.aternos.me</button>
+</div>
+
+<!-- CONTENT -->
+<div class="card">
+  <h2>📊 Tier List</h2>
+  <p>Yakında oyuncu sıralamaları eklenecek</p>
 </div>
 
 <div class="card">
-<h2>Sunucu Durumu</h2>
-<p>🟢 Online: 124 oyuncu</p>
+  <h2>🎮 Oyun Modları</h2>
+  <p>SMP ve BOXPVP</p>
 </div>
 
-<script src="script.js"></script>
+<div class="card">
+  <h2>🛒 Mağaza</h2>
+  <p>VIP paketleri yakında</p>
+</div>
+
+</div>
+
+<script>
+function toggleMenu(){
+  let menu = document.getElementById("mobileMenu");
+  menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+}
+
+function copyIP(){
+  navigator.clipboard.writeText("siumcraft.aternos.me");
+  alert("IP kopyalandı!");
+}
+</script>
 
 </body>
 </html>
