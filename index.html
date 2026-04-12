@@ -125,3 +125,93 @@ function openMenu() {
 <a href="#oyunlar">Oyunlar</a>
 <a href="#magaza">Mağaza</a>
 <a href="#destek">Destek</a>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SiumCraft</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #0b0f1a;
+    color: white;
+}
+
+.menu-btn {
+    font-size: 30px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.sidebar {
+    position: fixed;
+    left: -250px;
+    top: 0;
+    width: 250px;
+    height: 100%;
+    background: black;
+    transition: 0.3s;
+    padding-top: 20px;
+}
+
+.sidebar a {
+    display: block;
+    padding: 15px;
+    color: white;
+    text-decoration: none;
+}
+
+.sidebar a:hover {
+    background: #222;
+}
+
+.open {
+    left: 0;
+}
+
+.header {
+    background: #111;
+    padding: 10px;
+}
+
+.hero {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.hero h1 {
+    font-size: 40px;
+    color: gold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<span class="menu-btn" onclick="toggleMenu()">☰</span>
+</div>
+
+<div id="menu" class="sidebar">
+<a href="index.html">Anasayfa</a>
+<a href="oyunlar.html">Oyunlar</a>
+<a href="magaza.html">Mağaza</a>
+<a href="destek.html">Destek</a>
+</div>
+
+<div class="hero">
+<h1>SIUMCRAFT</h1>
+<p>Minecraft Sunucusu</p>
+</div>
+
+<script>
+function toggleMenu() {
+    document.getElementById("menu").classList.toggle("open");
+}
+</script>
+
+</body>
+</html>
