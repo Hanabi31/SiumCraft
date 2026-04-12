@@ -1,5 +1,6 @@
 [
-  {"name":"Steve","kills":15,"deaths":5},
-  {"name":"Alex","kills":10,"deaths":7},
-  {"name":"Dream","kills":20,"deaths":2}
+  {"name":"Oyuncu1","kills":50,"deaths":10},
+  {"name":"Oyuncu2","kills":40,"deaths":15},
+  {"name":"Oyuncu3","kills":30,"deaths":20},
+  {"name":"Oyuncu4","kills":25,"deaths":5}
 ]
