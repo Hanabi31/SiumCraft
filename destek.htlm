@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Destek</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="header">
+<span class="menu-btn" onclick="toggleMenu()">☰</span>
+</div>
+
+<div id="menu" class="sidebar">
+<a href="index.html">Anasayfa</a>
+<a href="oyunlar.html">Oyunlar</a>
+<a href="magaza.html">Mağaza</a>
+<a href="destek.html">Destek</a>
+</div>
+
+<div class="card">
+<h1>Destek</h1>
+<p>Discord: yakında</p>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
