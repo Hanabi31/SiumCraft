@@ -2,185 +2,107 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>SiumCraft Tier List</title>
+<title>SiumCraft Leaderboard</title>
 
 <style>
 body{
   background:#0f172a;
   color:white;
   font-family:sans-serif;
+  text-align:center;
 }
 
 h1{
-  text-align:center;
+  margin-top:20px;
 }
 
 .container{
-  max-width:900px;
-  margin:auto;
-}
-
-.tier{
   display:flex;
-  margin:10px 0;
-  border-radius:10px;
-  overflow:hidden;
-}
-
-.label{
-  width:80px;
-  display:flex;
-  align-items:center;
   justify-content:center;
-  font-weight:bold;
-}
-
-.dropzone{
-  flex:1;
-  min-height:80px;
-  display:flex;
   flex-wrap:wrap;
-  padding:10px;
 }
 
-.S{background:#ef4444;}
-.A{background:#f97316;}
-.B{background:#eab308;}
-.C{background:#22c55e;}
+.card{
+  background:#1e293b;
+  margin:20px;
+  padding:20px;
+  border-radius:15px;
+  width:300px;
+}
 
 .player{
-  background:#1e293b;
-  padding:5px;
-  margin:5px;
-  border-radius:8px;
-  cursor:grab;
-  text-align:center;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:8px;
+  border-bottom:1px solid #333;
 }
 
 .player img{
-  width:40px;
-  height:40px;
-  border-radius:6px;
-}
-
-input,button{
-  padding:10px;
-  margin:5px;
-  border:none;
-  border-radius:8px;
+  width:25px;
+  margin-right:5px;
 }
 </style>
 </head>
 
 <body>
 
-<h1>🔥 SiumCraft Tier List</h1>
+<h1>🏆 SiumCraft Leaderboard</h1>
 
 <div class="container">
 
-<input type="text" id="nick" placeholder="Oyuncu adı">
-<button onclick="ekle()">Ekle</button>
-
-<h3>Oyuncular</h3>
-<div id="players" class="dropzone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-
-<div class="tier">
-<div class="label S">S</div>
-<div class="dropzone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<div class="card">
+<h2>⚔️ Kill Sıralaması</h2>
+<div id="kills"></div>
 </div>
 
-<div class="tier">
-<div class="label A">A</div>
-<div class="dropzone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-</div>
-
-<div class="tier">
-<div class="label B">B</div>
-<div class="dropzone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-</div>
-
-<div class="tier">
-<div class="label C">C</div>
-<div class="dropzone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<div class="card">
+<h2>💀 Death Sıralaması</h2>
+<div id="deaths"></div>
 </div>
 
 </div>
 
 <script>
-function allowDrop(e){
-  e.preventDefault();
-}
 
-function drag(e){
-  e.dataTransfer.setData("id", e.target.id);
-}
+async function guncelle(){
 
-function drop(e){
-  e.preventDefault();
-  let id = e.dataTransfer.getData("id");
-  let el = document.getElementById(id);
-  e.target.appendChild(el);
-}
+  let res = await fetch("data.json");
+  let data = await res.json();
 
-function ekle(){
-  let nick = document.getElementById("nick").value;
-
-  let div = document.createElement("div");
-  div.className="player";
-  div.id="p"+Date.now();
-  div.draggable=true;
-  div.ondragstart=drag;
-
-  div.innerHTML = `
-  <img src="https://mc-heads.net/avatar/${nick}">
-  <br>${nick}
-  `;
-
-  document.getElementById("players").appendChild(div);
-}
-</script>
-window.onload = function(){
-  let saved = localStorage.getItem("tierlist");
-  if(!saved) return;
-
-  let data = JSON.parse(saved);
-  let zones = document.querySelectorAll(".dropzone");
-
-  data.forEach((zone, i)=>{
-    zone.forEach(player=>{
-      let div = document.createElement("div");
-      div.className="player";
-      div.id="p"+Date.now()+Math.random();
-      div.draggable=true;
-      div.ondragstart=drag;
-
-      div.innerHTML = `
-      <img src="https://mc-heads.net/avatar/${player.nick}">
-      <br>${player.nick}
-      `;
-
-      zones[i].appendChild(div);
-    });
+  // kill sıralama
+  let kills = [...data].sort((a,b)=>b.kills-a.kills);
+  let htmlK = "";
+  kills.forEach((p,i)=>{
+    htmlK += `
+    <div class="player">
+      <span>#${i+1} ${p.name}</span>
+      <span>${p.kills}</span>
+    </div>`;
   });
-}
-<h2>🏆 Kill Sıralaması</h2>
-<div id="leaderboard"></div>
+  document.getElementById("kills").innerHTML = htmlK;
 
-<script>
-<h2>📊 Tier List</h2>
-<p>Oyuncu sıralamalarını görmek için tıkla</p>
-<a href="tierlist.html" style="
-display:inline-block;
-margin-top:10px;
-padding:10px 15px;
-background:#facc15;
-color:black;
-border-radius:10px;
-text-decoration:none;
-font-weight:bold;
-">
-Tier List'e Git
-</a>
+  // death sıralama
+  let deaths = [...data].sort((a,b)=>b.deaths-a.deaths);
+  let htmlD = "";
+  deaths.forEach((p,i)=>{
+    htmlD += `
+    <div class="player">
+      <span>#${i+1} ${p.name}</span>
+      <span>${p.deaths}</span>
+    </div>`;
+  });
+  document.getElementById("deaths").innerHTML = htmlD;
+
+}
+
+// ilk yükleme
+guncelle();
+
+// 🔄 1 DAKİKADA BİR YENİLE
+setInterval(guncelle, 60000);
+
+</script>
 
 </body>
 </html>
