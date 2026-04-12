@@ -189,6 +189,49 @@ function copyIP(){
   alert("IP kopyalandı!");
 }
 </script>
+<script>
+function yukle(){
+fetch("https://api.mcstatus.io/v2/status/java/siumcraft.net")
+.then(res => res.json())
+.then(data => {
+
+    if(data.online){
+        document.getElementById("online").innerText =
+        "🟢 Online: " + data.players.online + " / " + data.players.max;
+
+        document.getElementById("ping").innerText =
+        "⚡ Ping: " + data.latency + " ms";
+
+        let liste = document.getElementById("players");
+        liste.innerHTML = "";
+
+        if(data.players.list){
+            data.players.list.forEach(p => {
+                liste.innerHTML += `
+                <div style="display:flex;align-items:center;margin:5px;">
+                    <img src="https://mc-heads.net/avatar/${p.name}" width="30" style="margin-right:10px;">
+                    ${p.name}
+                </div>
+                `;
+            });
+        } else {
+            liste.innerHTML = "Oyuncu listesi gizli";
+        }
+
+    } else {
+        document.getElementById("online").innerText =
+        "🔴 Sunucu offline";
+    }
+
+});
+}
+
+// ilk yükleme
+yukle();
+
+// her 10 saniye güncelle
+setInterval(yukle, 10000);
+</script>
 
 </body>
 </html>
