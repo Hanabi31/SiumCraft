@@ -10,10 +10,9 @@
 body{
   font-family:sans-serif;
   color:white;
-  overflow:hidden;
 }
 
-/* ARKA PLAN (GIF / RESİM) */
+/* ARKA PLAN */
 .bg{
   position:fixed;
   width:100%;
@@ -22,68 +21,94 @@ body{
   z-index:-2;
 }
 
-/* KARARTMA */
 .overlay{
   position:fixed;
   width:100%;
   height:100%;
-  background:linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.3));
+  background:rgba(0,0,0,0.7);
   z-index:-1;
 }
 
-/* ANA KUTU */
-.box{
+/* ANA */
+.container{
+  display:flex;
   height:100vh;
+}
+
+/* SOL */
+.left{
+  flex:1;
   display:flex;
   flex-direction:column;
   justify-content:center;
-  align-items:center;
-  text-align:center;
+  padding:40px;
 }
 
-/* BAŞLIK */
-h1{
+.left h1{
   font-size:60px;
   text-shadow:0 0 20px #22c55e;
 }
 
-p{
+.left p{
+  margin:10px 0;
   color:#ccc;
-  margin:10px;
   font-size:20px;
 }
 
-/* BUTONLAR */
-.buttons{
-  margin-top:20px;
-}
-
+/* BUTON */
 .btn{
-  padding:15px 30px;
-  margin:8px;
+  margin-top:10px;
+  padding:15px;
   border:none;
-  border-radius:12px;
-  font-size:18px;
+  border-radius:10px;
   cursor:pointer;
-  transition:0.2s;
-}
-
-.btn:hover{
-  transform:scale(1.1);
+  font-size:16px;
 }
 
 .ip{background:#22c55e;color:black;}
 .dc{background:#5865F2;}
-.panel{background:#f59e0b;color:black;}
 .rank{background:#e11d48;}
 
-/* SUNUCU DURUM */
+/* SAĞ PANEL */
+.right{
+  width:350px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.panel{
+  background:#020617;
+  padding:30px;
+  border-radius:20px;
+  box-shadow:0 0 30px #22c55e;
+  text-align:center;
+}
+
+/* INPUT */
+input{
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border:none;
+  border-radius:10px;
+}
+
+/* LOGIN */
+.login{
+  background:#22c55e;
+  color:black;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  width:100%;
+  cursor:pointer;
+}
+
+/* STATUS */
 .status{
-  margin-top:25px;
-  background:rgba(0,0,0,0.6);
-  padding:15px 25px;
-  border-radius:15px;
-  font-size:18px;
+  margin-top:15px;
+  font-size:14px;
 }
 
 .online{color:#22c55e;}
@@ -97,20 +122,30 @@ p{
 <div class="bg"></div>
 <div class="overlay"></div>
 
-<div class="box">
-  <h1>SiumCraft</h1>
-  <p>Türkiye'nin en iyi Minecraft sunucusu</p>
+<div class="container">
 
-  <div class="buttons">
+  <!-- SOL -->
+  <div class="left">
+    <h1>SiumCraft</h1>
+    <p>Türkiye'nin en iyi Minecraft sunucusu</p>
+
     <button class="btn ip" onclick="kopyala()">IP Kopyala</button>
     <button class="btn dc" onclick="dc()">Discord</button>
-    <button class="btn panel" onclick="git('panel.html')">Panel</button>
     <button class="btn rank" onclick="git('tierlist.html')">Sıralama</button>
+
+    <div class="status" id="durum">Yükleniyor...</div>
   </div>
 
-  <div class="status">
-    <span id="durum">Yükleniyor...</span>
+  <!-- SAĞ -->
+  <div class="right">
+    <div class="panel">
+      <h2>Giriş Yap</h2>
+
+      <input id="nick" placeholder="Minecraft Nick">
+      <button class="login" onclick="login()">Giriş</button>
+    </div>
   </div>
+
 </div>
 
 <script>
@@ -121,23 +156,36 @@ function kopyala(){
 }
 
 function dc(){
-  window.location.href="https://discord.gg/SiumCraft"; // kendi linkini koy
+  window.location.href="https://discord.gg/SiumCraft";
 }
 
 function git(x){
   window.location.href=x;
 }
 
-// SERVER API
+// LOGIN
+function login(){
+  let nick = document.getElementById("nick").value;
+
+  if(nick==""){
+    alert("Nick gir!");
+    return;
+  }
+
+  localStorage.setItem("nick", nick);
+  window.location.href="panel2.html";
+}
+
+// SERVER
 async function durum(){
   let res = await fetch("https://api.mcsrvstat.us/2/siumcraft.aternos.me");
   let data = await res.json();
 
   if(data.online){
-    document.getElementById("durum").innerHTML="🟢 Sunucu Online";
+    document.getElementById("durum").innerHTML="🟢 Online";
     document.getElementById("durum").className="online";
   }else{
-    document.getElementById("durum").innerHTML="🔴 Sunucu Offline";
+    document.getElementById("durum").innerHTML="🔴 Offline";
     document.getElementById("durum").className="offline";
   }
 }
