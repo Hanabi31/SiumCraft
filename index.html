@@ -5,249 +5,210 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SiumCraft</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
 <style>
 body {
-  margin:0;
-  font-family:Arial;
-  background: url('https://images.unsplash.com/photo-1605902711622-cfb43c44367f') no-repeat center center/cover;
-  color:white;
+  margin: 0;
+  font-family: 'Press Start 2P', cursive;
+  color: white;
+  overflow-x: hidden;
 }
 
-/* overlay */
-.overlay {
-  background:rgba(0,0,0,0.7);
-  min-height:100vh;
+/* VIDEO BACKGROUND */
+#bgVideo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
 }
 
 /* NAVBAR */
 .navbar {
-  background:#111;
-  padding:15px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0,0,0,0.8);
+  padding: 15px 30px;
+  position: sticky;
+  top: 0;
 }
 
 .logo {
-  color:orange;
-  font-size:22px;
-  font-weight:bold;
+  color: #00ffcc;
+  text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
 }
 
-/* MENU */
-.menu {
-  display:flex;
+.navbar ul {
+  display: flex;
+  list-style: none;
 }
 
-.menu a {
-  color:white;
-  margin-left:15px;
-  text-decoration:none;
+.navbar ul li {
+  margin-left: 20px;
 }
 
-.menu a:hover {
-  color:orange;
+.navbar ul li a {
+  color: white;
+  text-decoration: none;
+  transition: 0.3s;
 }
 
-/* MOBILE MENU */
-.menu-btn {
-  display:none;
-  font-size:25px;
-}
-
-.mobile-menu {
-  display:none;
-  flex-direction:column;
-  background:#111;
-  padding:10px;
-}
-
-.mobile-menu a {
-  padding:10px;
-  border-bottom:1px solid #222;
-  color:white;
-  text-decoration:none;
+.navbar ul li a:hover {
+  color: #00ffcc;
 }
 
 /* HERO */
 .hero {
-  text-align:center;
-  padding:100px 20px;
-  animation:fade 2s;
-}
-
-@keyframes fade {
-  from {opacity:0; transform:translateY(20px);}
-  to {opacity:1; transform:translateY(0);}
+  text-align: center;
+  padding: 120px 20px;
 }
 
 .hero h1 {
-  font-size:40px;
+  font-size: 20px;
 }
 
 .hero p {
-  color:#ccc;
+  font-size: 10px;
+  margin: 20px 0;
 }
 
 /* BUTTON */
-.btn {
-  background:orange;
-  padding:15px 25px;
-  border:none;
-  border-radius:10px;
-  font-size:16px;
-  margin-top:20px;
-  cursor:pointer;
+.button {
+  background: #00ffcc;
+  padding: 12px 25px;
+  border-radius: 10px;
+  color: black;
+  text-decoration: none;
+  transition: 0.3s;
+  display: inline-block;
+  margin: 10px;
 }
 
-/* CARD */
+.button:hover {
+  transform: scale(1.1);
+  background: #00ccaa;
+}
+
+/* CARDS */
+.section {
+  padding: 60px 20px;
+  text-align: center;
+  background: rgba(0,0,0,0.6);
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
 .card {
-  background:rgba(0,0,0,0.8);
-  margin:20px;
-  padding:20px;
-  border-radius:10px;
+  background: rgba(0,0,0,0.8);
+  padding: 20px;
+  border-radius: 15px;
+  width: 250px;
+  transition: 0.3s;
 }
 
-/* RESPONSIVE */
-@media(max-width:768px){
-  .menu {display:none;}
-  .menu-btn {display:block;}
+.card:hover {
+  transform: translateY(-10px);
+}
+
+/* FOOTER */
+.footer {
+  background: black;
+  text-align: center;
+  padding: 20px;
+  font-size: 10px;
+}
+
+/* ANIMATION */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>
-
 </head>
 
 <body>
 
-<div class="overlay">
+<!-- VIDEO -->
+<video autoplay muted loop id="bgVideo">
+  <source src="https://cdn.coverr.co/videos/coverr-minecraft-landscape-5176/1080p.mp4" type="video/mp4">
+</video>
 
 <!-- NAVBAR -->
-<div class="navbar">
-  <div class="logo">🔥 SiumCraft</div>
-
-  <div class="menu">
-    <a href="index.html">Ana Sayfa</a>
-    <a href="#">Oyunlar</a>
-    <a href="#">Mağaza</a>
-    <a href="support.html">Destek</a>
-  </div>
-
-  <div class="menu-btn" onclick="toggleMenu()">☰</div>
-</div>
-
-<!-- MOBILE MENU -->
-<div class="mobile-menu" id="mobileMenu">
-  <a href="index.html">Ana Sayfa</a>
-  <a href="#">Oyunlar</a>
-  <a href="#">Mağaza</a>
-  <a href="support.html">Destek</a>
-</div>
+<nav class="navbar">
+  <div class="logo">SiumCraft</div>
+  <ul>
+    <li><a href="#">Ana Sayfa</a></li>
+    <li><a href="#">Sunucu</a></li>
+    <li><a href="#">Mağaza</a></li>
+    <li><a href="#">İletişim</a></li>
+  </ul>
+</nav>
 
 <!-- HERO -->
-<div class="hero">
+<section class="hero fade-in">
   <h1>SiumCraft Sunucusuna Hoşgeldin</h1>
-  <p>En iyi Minecraft PvP deneyimi</p>
+  <p>En iyi Minecraft deneyimi burada!</p>
 
-  <button class="btn" onclick="copyIP()">Sunucu IP: siumcraft.aternos.me</button>
+  <!-- PLAYER COUNT -->
+  <p id="players">Oyuncular yükleniyor...</p>
 
+  <a href="#" class="button" onclick="copyIP()">IP Kopyala</a>
   <a href="https://discord.gg/SiumCraft" class="button">Discord Katıl</a>
+</section>
 
-</div>
-<!-- CONTENT -->
-<div class="card">
-<h2>🟢 Sunucu Durumu</h2>
+<!-- FEATURES -->
+<section class="section">
+  <h2>Özellikler</h2>
+  <div class="cards">
 
-<p id="online">Yükleniyor...</p>
-<p id="ping"></p>
+    <div class="card">
+      <h3>⚔️ Survival</h3>
+      <p>Efsane SMP sistemi</p>
+    </div>
 
-<h3>👥 Oyuncular</h3>
-<div id="players"></div>
-</div>
-  
-  <div class="card">
-  <h2>📊 Tier List</h2>
-<p>Oyuncu sıralamalarını görmek için tıkla</p>
-<a href="tierlist.html" style="
-display:inline-block;
-margin-top:10px;
-padding:10px 15px;
-background:#facc15;
-color:black;
-border-radius:10px;
-text-decoration:none;
-font-weight:bold;
-">
-Tier List'e Git
-</a>
-  
-</div>
+    <div class="card">
+      <h3>💰 Ekonomi</h3>
+      <p>Gelişmiş para sistemi</p>
+    </div>
 
-<div class="card">
-  <h2>🎮 Oyun Modları</h2>
-  <p>SMP ve BOXPVP</p>
-</div>
+    <div class="card">
+      <h3>👑 Rank</h3>
+      <p>Özel rank ve yetkiler</p>
+    </div>
 
-<div class="card">
-  <h2>🛒 Mağaza</h2>
-  <p>VIP paketleri yakında</p>
-</div>
+  </div>
+</section>
 
+<!-- FOOTER -->
+<div class="footer">
+  © 2026 SiumCraft - Tüm hakları saklıdır
 </div>
 
 <script>
-function toggleMenu(){
-  let menu = document.getElementById("mobileMenu");
-  menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+// IP COPY
+function copyIP() {
+  navigator.clipboard.writeText("play.siumcraft.net");
+  alert("IP kopyalandı: siumcraft.aternos.me");
 }
 
-function copyIP(){
-  navigator.clipboard.writeText("siumcraft.aternos.me");
-  alert("IP kopyalandı!");
-}
-</script>
-<script>
-function yukle(){
-fetch("https://api.mcstatus.io/v2/status/java/siumcraft.net")
-.then(res => res.json())
-.then(data => {
-
-    if(data.online){
-        document.getElementById("online").innerText =
-        "🟢 Online: " + data.players.online + " / " + data.players.max;
-
-        document.getElementById("ping").innerText =
-        "⚡ Ping: " + data.latency + " ms";
-
-        let liste = document.getElementById("players");
-        liste.innerHTML = "";
-
-        if(data.players.list){
-            data.players.list.forEach(p => {
-                liste.innerHTML += `
-                <div style="display:flex;align-items:center;margin:5px;">
-                    <img src="https://mc-heads.net/avatar/${p.name}" width="30" style="margin-right:10px;">
-                    ${p.name}
-                </div>
-                `;
-            });
-        } else {
-            liste.innerHTML = "Oyuncu listesi gizli";
-        }
-
-    } else {
-        document.getElementById("online").innerText =
-        "🔴 Sunucu offline";
-    }
-
-});
-}
-
-// ilk yükleme
-yukle();
-
-// her 10 saniye güncelle
-setInterval(yukle, 10000);
-</script>
+// PLAYER COUNT API
 fetch("https://api.mcsrvstat.us/2/play.siumcraft.net")
 .then(res => res.json())
 .then(data => {
@@ -260,19 +221,6 @@ fetch("https://api.mcsrvstat.us/2/play.siumcraft.net")
   }
 });
 </script>
-</body>
 
-  <video autoplay muted loop id="bgVideo">
-  <source src="https://cdn.coverr.co/videos/coverr-minecraft-landscape-5176/1080p.mp4" type="video/mp4">
-</video>
-  <nav class="navbar">
-  <h1 class="logo">SiumCraft</h1>
-  <ul>
-   
-    <li><a href="#">Ana Sayfa</a></li>
-    <li><a href="#">Sunucu</a></li>
-    <li><a href="#">Mağaza</a></li>
-    <li><a href="#">İletişim</a></li>
-  </ul>
-</nav>
+</body>
 </html>
