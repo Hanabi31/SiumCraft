@@ -1,1 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Panel</title>
 
+<style>
+body{
+  background:#020617;
+  color:white;
+  font-family:sans-serif;
+  text-align:center;
+}
+
+.box{
+  margin-top:50px;
+}
+
+button{
+  display:block;
+  margin:10px auto;
+  padding:15px;
+  width:200px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="box">
+<h1>Hoşgeldin <span id="nick"></span></h1>
+
+<button onclick="git('tierlist.html')">🏆 Sıralama</button>
+<button onclick="git('shop.html')">🛒 Mağaza</button>
+<button onclick="dc()">💬 Discord</button>
+<button onclick="cikis()">🚪 Çıkış</button>
+</div>
+
+<script>
+
+document.getElementById("nick").innerText = localStorage.getItem("nick");
+
+function git(s){
+  window.location.href=s;
+}
+
+function dc(){
+  window.location.href="https://discord.gg/SiumCraft";
+}
+
+function cikis(){
+  localStorage.clear();
+  window.location.href="panel.html";
+}
+
+</script>
+
+</body>
+</html>
