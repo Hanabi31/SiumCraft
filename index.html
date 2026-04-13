@@ -245,7 +245,18 @@ yukle();
 // her 10 saniye güncelle
 setInterval(yukle, 10000);
 </script>
-
+fetch("https://api.mcsrvstat.us/2/play.siumcraft.net")
+.then(res => res.json())
+.then(data => {
+  if(data.online){
+    document.getElementById("players").innerText =
+      "Online Oyuncu: " + data.players.online;
+  } else {
+    document.getElementById("players").innerText =
+      "Sunucu kapalı";
+  }
+});
+</script>
 </body>
 
   <video autoplay muted loop id="bgVideo">
