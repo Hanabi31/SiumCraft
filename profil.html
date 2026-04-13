@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Oyuncu Profil</title>
+
+<style>
+body{
+  background:#0f172a;
+  color:white;
+  font-family:sans-serif;
+  text-align:center;
+}
+
+.card{
+  background:#1e293b;
+  padding:20px;
+  border-radius:15px;
+  width:300px;
+  margin:auto;
+  margin-top:50px;
+}
+
+img{
+  width:100px;
+  border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>👤 Oyuncu Profil</h1>
+
+<div class="card">
+  <img id="skin">
+  <h2 id="name"></h2>
+  <p id="kills"></p>
+  <p id="deaths"></p>
+</div>
+
+<script>
+let params = new URLSearchParams(window.location.search);
+let nick = params.get("nick");
+
+async function yukle(){
+  let res = await fetch("data.json");
+  let data = await res.json();
+
+  let p = data.find(x => x.name == nick);
+
+  document.getElementById("skin").src = "https://mc-heads.net/avatar/" + nick;
+  document.getElementById("name").innerText = nick;
+
+  if(p){
+    document.getElementById("kills").innerText = "⚔️ Kill: " + p.kills;
+    document.getElementById("deaths").innerText = "💀 Death: " + p.deaths;
+  }
+}
+
+yukle();
+</script>
+
+</body>
+</html>
