@@ -2,62 +2,21 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Destek - SiumCraft</title>
-
-<style>
-body {
-  background:#0d0d0d;
-  color:white;
-  font-family:Arial;
-  text-align:center;
-}
-
-.box {
-  margin-top:100px;
-}
-
-input, textarea {
-  width:80%;
-  padding:10px;
-  margin:10px;
-  border-radius:8px;
-  border:none;
-}
-
-button {
-  padding:15px 30px;
-  background:#ffb300;
-  border:none;
-  border-radius:10px;
-  font-size:18px;
-}
-</style>
+<title>Destek</title>
 </head>
 
-<body>
+<body style="background:#111;color:white;text-align:center;">
 
-<div class="box">
-<h1>Destek Sistemi</h1>
+<h1>Destek</h1>
 
-<input id="name" placeholder="Minecraft Nick">
-<input id="title" placeholder="Konu">
-<textarea id="desc" placeholder="Sorununu yaz"></textarea>
+<input placeholder="Kullanıcı adın"><br><br>
+<textarea placeholder="Sorununu yaz"></textarea><br><br>
 
-<br>
-<button onclick="send()">Destek Aç</button>
-</div>
+<button onclick="gonder()">Gönder</button>
 
 <script>
-function send() {
-  let name = document.getElementById("name").value;
-  let title = document.getElementById("title").value;
-  let desc = document.getElementById("desc").value;
-
-  let url = "https://github.com/Hanabi31/SiumCraft/issues/new?"
-    + "title=" + encodeURIComponent(title + " - " + name)
-    + "&body=" + encodeURIComponent(desc);
-
-  window.open(url);
+function gonder(){
+  alert("Destek gönderildi!");
 }
 </script>
 
