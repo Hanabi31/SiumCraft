@@ -10,22 +10,26 @@
 body{
   font-family:sans-serif;
   color:white;
+  overflow:hidden;
 }
 
-/* ARKA PLAN */
-.bg{
+/* YOUTUBE BACKGROUND */
+iframe{
   position:fixed;
+  top:0;
+  left:0;
   width:100%;
   height:100%;
-  background:url("https://i.imgur.com/3ZQ3Z6G.gif") center/cover no-repeat;
   z-index:-2;
+  pointer-events:none;
 }
 
+/* DARK OVERLAY */
 .overlay{
   position:fixed;
   width:100%;
   height:100%;
-  background:rgba(0,0,0,0.7);
+  background:rgba(0,0,0,0.65);
   z-index:-1;
 }
 
@@ -33,6 +37,7 @@ body{
 .container{
   display:flex;
   height:100vh;
+  animation:fade 1.5s ease;
 }
 
 /* SOL */
@@ -41,28 +46,33 @@ body{
   display:flex;
   flex-direction:column;
   justify-content:center;
-  padding:40px;
+  padding:60px;
 }
 
 .left h1{
-  font-size:60px;
-  text-shadow:0 0 20px #22c55e;
+  font-size:70px;
+  text-shadow:0 0 30px #22c55e;
 }
 
 .left p{
-  margin:10px 0;
+  font-size:22px;
   color:#ccc;
-  font-size:20px;
+  margin:10px 0;
 }
 
 /* BUTON */
 .btn{
-  margin-top:10px;
-  padding:15px;
+  padding:15px 25px;
+  margin:8px 0;
   border:none;
-  border-radius:10px;
+  border-radius:12px;
+  font-size:18px;
   cursor:pointer;
-  font-size:16px;
+  transition:0.2s;
+}
+
+.btn:hover{
+  transform:scale(1.1);
 }
 
 .ip{background:#22c55e;color:black;}
@@ -71,18 +81,21 @@ body{
 
 /* SAĞ PANEL */
 .right{
-  width:350px;
+  width:380px;
   display:flex;
-  justify-content:center;
   align-items:center;
+  justify-content:center;
 }
 
+/* GLASS EFFECT */
 .panel{
-  background:#020617;
-  padding:30px;
+  backdrop-filter:blur(15px);
+  background:rgba(255,255,255,0.05);
   border-radius:20px;
-  box-shadow:0 0 30px #22c55e;
+  padding:30px;
+  width:100%;
   text-align:center;
+  box-shadow:0 0 40px rgba(34,197,94,0.5);
 }
 
 /* INPUT */
@@ -96,30 +109,36 @@ input{
 
 /* LOGIN */
 .login{
-  background:#22c55e;
-  color:black;
+  width:100%;
   padding:12px;
+  background:#22c55e;
   border:none;
   border-radius:10px;
-  width:100%;
   cursor:pointer;
 }
 
 /* STATUS */
 .status{
-  margin-top:15px;
-  font-size:14px;
+  margin-top:20px;
+  font-size:16px;
 }
 
 .online{color:#22c55e;}
 .offline{color:red;}
 
+/* ANIMATION */
+@keyframes fade{
+  from{opacity:0; transform:translateY(40px);}
+  to{opacity:1; transform:translateY(0);}
+}
 </style>
 </head>
 
 <body>
 
-<div class="bg"></div>
+<!-- YOUTUBE VIDEO -->
+<iframe src="https://www.youtube.com/embed/2OEL4P1Rz04?autoplay=1&mute=1&controls=0&loop=1&playlist=2OEL4P1Rz04"></iframe>
+
 <div class="overlay"></div>
 
 <div class="container">
@@ -139,16 +158,24 @@ input{
   <!-- SAĞ -->
   <div class="right">
     <div class="panel">
-      <h2>Giriş Yap</h2>
+      <h2>🎮 Giriş</h2>
 
       <input id="nick" placeholder="Minecraft Nick">
-      <button class="login" onclick="login()">Giriş</button>
+      <button class="login" onclick="login()">Giriş Yap</button>
     </div>
   </div>
 
 </div>
 
+<!-- SES -->
+<audio id="music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
 <script>
+
+// SES (ilk tıklamada başlar)
+document.body.addEventListener("click", ()=>{
+  document.getElementById("music").play();
+},{once:true});
 
 function kopyala(){
   navigator.clipboard.writeText("siumcraft.aternos.me");
@@ -176,16 +203,16 @@ function login(){
   window.location.href="panel2.html";
 }
 
-// SERVER
+// SERVER API
 async function durum(){
   let res = await fetch("https://api.mcsrvstat.us/2/siumcraft.aternos.me");
   let data = await res.json();
 
   if(data.online){
-    document.getElementById("durum").innerHTML="🟢 Online";
+    document.getElementById("durum").innerHTML="🟢 Sunucu Online";
     document.getElementById("durum").className="online";
   }else{
-    document.getElementById("durum").innerHTML="🔴 Offline";
+    document.getElementById("durum").innerHTML="🔴 Sunucu Offline";
     document.getElementById("durum").className="offline";
   }
 }
