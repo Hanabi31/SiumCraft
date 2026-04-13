@@ -6,19 +6,22 @@
 <title>SiumCraft</title>
 
 <style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif;}
+
 body{
-  margin:0;
-  font-family:sans-serif;
+  height:100vh;
+  background:url("https://wallpapercave.com/wp/wp2757874.jpg") no-repeat center center/cover;
   color:white;
-  background:url("https://images.alphacoders.com/998/998181.jpg") no-repeat center center/cover;
 }
 
-/* ÜST BAR */
+/* NAVBAR */
 .nav{
+  position:fixed;
+  width:100%;
   display:flex;
   justify-content:space-between;
   padding:15px;
-  background:rgba(0,0,0,0.7);
+  background:rgba(0,0,0,0.6);
 }
 
 .nav a{
@@ -27,76 +30,99 @@ body{
   text-decoration:none;
 }
 
-/* ORTA PANEL */
-.panel{
+/* HERO */
+.hero{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
   text-align:center;
-  margin-top:120px;
-  background:rgba(0,0,0,0.7);
-  padding:30px;
-  border-radius:20px;
-  width:90%;
-  max-width:400px;
-  margin-left:auto;
-  margin-right:auto;
+  background:rgba(0,0,0,0.5);
 }
 
-button{
-  padding:12px 25px;
+/* BUTON */
+.btn{
+  padding:15px 25px;
   margin:10px;
   border:none;
-  border-radius:10px;
-  background:#00ffcc;
+  border-radius:12px;
   font-size:16px;
+  font-weight:bold;
 }
 
+/* RENKLER */
+.ip{background:#00ffcc;color:black;}
+.dc{background:#5865F2;}
+.shop{background:#facc15;color:black;}
+.rank{background:#22c55e;}
+.support{background:#ef4444;}
+
+.status{
+  margin-top:10px;
+  font-size:18px;
+}
 </style>
 </head>
 
 <body>
 
+<!-- NAV -->
 <div class="nav">
-  <div>SiumCraft</div>
+  <h2>SiumCraft</h2>
   <div>
     <a href="index.html">Ana Sayfa</a>
     <a href="shop.html">Mağaza</a>
+    <a href="tierlist.html">Sıralama</a>
     <a href="support.html">Destek</a>
   </div>
 </div>
 
-<div class="panel">
-  <h1>SiumCraft Panel</h1>
+<!-- HERO -->
+<div class="hero">
 
-  <button onclick="kopyala()">IP Kopyala</button>
-  <button onclick="discord()">Discord</button>
+<h1 style="font-size:40px;">SiumCraft Panel</h1>
 
-  <p id="durum">Yükleniyor...</p>
+<div>
+  <button class="btn ip" onclick="kopyala()">IP Kopyala</button>
+  <button class="btn dc" onclick="discord()">Discord</button>
+</div>
+
+<div>
+  <button class="btn shop" onclick="window.location.href='shop.html'">Mağaza</button>
+  <button class="btn rank" onclick="window.location.href='tierlist.html'">Sıralama</button>
+  <button class="btn support" onclick="window.location.href='support.html'">Destek</button>
+</div>
+
+<p class="status" id="durum">Yükleniyor...</p>
+
 </div>
 
 <script>
 
-// IP KOPYALA
+// IP
 function kopyala(){
-  navigator.clipboard.writeText("siumcraft.aternos.me");
-  alert("IP kopyalandı!");
+navigator.clipboard.writeText("siumcraft.aternos.me");
+alert("IP kopyalandı!");
 }
 
 // DISCORD
 function discord(){
-  window.location.href="https://discord.gg/SiumCraft"; // BURAYA KENDİ LİNKİNİ KOY
+window.location.href="https://discord.gg/SiumCraft";
 }
 
-// SUNUCU DURUM
+// SERVER
 async function durum(){
-  let res = await fetch("https://api.mcsrvstat.us/2/siumcraft.aternos.me");
-  let data = await res.json();
+let res = await fetch("https://api.mcsrvstat.us/2/siumcraft.aternos.me");
+let data = await res.json();
 
-  if(data.online){
-    document.getElementById("durum").innerHTML =
-    "🟢 "+data.players.online+" oyuncu aktif";
-  }else{
-    document.getElementById("durum").innerHTML =
-    "🔴 Sunucu offline";
-  }
+if(data.online){
+document.getElementById("durum").innerHTML =
+"🟢 "+data.players.online+" oyuncu aktif";
+}else{
+document.getElementById("durum").innerHTML =
+"🔴 Sunucu offline";
+}
 }
 
 durum();
