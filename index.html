@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>SiumCraft Panel</title>
+<title>SiumCraft</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -10,59 +10,80 @@
 body{
   font-family:sans-serif;
   color:white;
-  background:url("https://wallpapercave.com/wp/wp2757874.gif") center/cover no-repeat fixed;
+  overflow:hidden;
 }
 
-/* DARK */
+/* ARKA PLAN (GIF / RESİM) */
+.bg{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:url("https://i.imgur.com/3ZQ3Z6G.gif") center/cover no-repeat;
+  z-index:-2;
+}
+
+/* KARARTMA */
 .overlay{
   position:fixed;
   width:100%;
   height:100%;
-  background:rgba(0,0,0,0.75);
+  background:linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.3));
+  z-index:-1;
 }
 
-/* PANEL */
-.panel{
-  position:relative;
-  max-width:400px;
-  margin:100px auto;
-  background:#020617;
-  padding:30px;
-  border-radius:20px;
+/* ANA KUTU */
+.box{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
   text-align:center;
-  box-shadow:0 0 30px #22c55e;
 }
 
-/* TITLE */
-.panel h1{
-  font-size:28px;
-  margin-bottom:20px;
+/* BAŞLIK */
+h1{
+  font-size:60px;
+  text-shadow:0 0 20px #22c55e;
 }
 
-/* BUTTON */
+p{
+  color:#ccc;
+  margin:10px;
+  font-size:20px;
+}
+
+/* BUTONLAR */
+.buttons{
+  margin-top:20px;
+}
+
 .btn{
-  display:block;
-  width:100%;
-  padding:15px;
-  margin:10px 0;
+  padding:15px 30px;
+  margin:8px;
   border:none;
   border-radius:12px;
-  font-size:16px;
+  font-size:18px;
   cursor:pointer;
-  font-weight:bold;
+  transition:0.2s;
 }
 
-.shop{background:#22c55e;color:black;}
+.btn:hover{
+  transform:scale(1.1);
+}
+
+.ip{background:#22c55e;color:black;}
 .dc{background:#5865F2;}
-.home{background:#f59e0b;color:black;}
+.panel{background:#f59e0b;color:black;}
 .rank{background:#e11d48;}
 
-/* STATUS */
+/* SUNUCU DURUM */
 .status{
-  margin-top:20px;
-  padding:15px;
-  background:#000;
-  border-radius:10px;
+  margin-top:25px;
+  background:rgba(0,0,0,0.6);
+  padding:15px 25px;
+  border-radius:15px;
+  font-size:18px;
 }
 
 .online{color:#22c55e;}
@@ -73,42 +94,50 @@ body{
 
 <body>
 
+<div class="bg"></div>
 <div class="overlay"></div>
 
-<div class="panel">
-  <h1>🎮 SiumCraft Panel</h1>
+<div class="box">
+  <h1>SiumCraft</h1>
+  <p>Türkiye'nin en iyi Minecraft sunucusu</p>
 
-  <button class="btn shop" onclick="git('shop.html')">🛒 Mağaza</button>
-  <button class="btn dc" onclick="dc()">💬 Discord</button>
-  <button class="btn rank" onclick="git('tierlist.html')">🏆 Sıralama</button>
-  <button class="btn home" onclick="git('index.html')">🏠 Ana Sayfa</button>
+  <div class="buttons">
+    <button class="btn ip" onclick="kopyala()">IP Kopyala</button>
+    <button class="btn dc" onclick="dc()">Discord</button>
+    <button class="btn panel" onclick="git('panel.html')">Panel</button>
+    <button class="btn rank" onclick="git('tierlist.html')">Sıralama</button>
+  </div>
 
   <div class="status">
-    <h3>Sunucu</h3>
-    <p id="durum">Yükleniyor...</p>
+    <span id="durum">Yükleniyor...</span>
   </div>
 </div>
 
 <script>
 
-function git(link){
-  window.location.href = link;
+function kopyala(){
+  navigator.clipboard.writeText("siumcraft.aternos.me");
+  alert("IP kopyalandı!");
 }
 
 function dc(){
-  window.location.href="https://discord.gg/SiumCraft"; // BURAYA KENDİ LİNKİNİ KOY
+  window.location.href="https://discord.gg/SiumCraft"; // kendi linkini koy
 }
 
-// SERVER
+function git(x){
+  window.location.href=x;
+}
+
+// SERVER API
 async function durum(){
   let res = await fetch("https://api.mcsrvstat.us/2/siumcraft.aternos.me");
   let data = await res.json();
 
   if(data.online){
-    document.getElementById("durum").innerHTML="🟢 Online";
+    document.getElementById("durum").innerHTML="🟢 Sunucu Online";
     document.getElementById("durum").className="online";
   }else{
-    document.getElementById("durum").innerHTML="🔴 Offline";
+    document.getElementById("durum").innerHTML="🔴 Sunucu Offline";
     document.getElementById("durum").className="offline";
   }
 }
