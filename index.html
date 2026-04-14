@@ -5,140 +5,94 @@
 <title>SiumCraft</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif;}
-
 body{
-  height:100vh;
-  background:url("https://wallpapercave.com/wp/wp2757874.jpg") no-repeat center center/cover;
-  color:white;
+margin:0;
+font-family:sans-serif;
+color:white;
+background:url("https://wallpapercave.com/wp/wp2757874.jpg") center/cover no-repeat;
 }
 
-/* NAVBAR */
 .nav{
-  position:fixed;
-  width:100%;
-  display:flex;
-  justify-content:space-between;
-  padding:15px;
-  background:rgba(0,0,0,0.6);
+display:flex;
+justify-content:space-between;
+padding:15px;
+background:rgba(0,0,0,0.7);
 }
 
 .nav a{
-  color:white;
-  margin:10px;
-  text-decoration:none;
+color:white;
+margin:10px;
+text-decoration:none;
 }
 
-/* ORTA */
 .hero{
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  background:rgba(0,0,0,0.5);
+height:90vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+background:rgba(0,0,0,0.6);
 }
 
-/* BUTON */
-.btn{
-  padding:15px 25px;
-  margin:10px;
-  border:none;
-  border-radius:12px;
-  font-size:16px;
-  font-weight:bold;
+button{
+padding:12px 20px;
+margin:10px;
+border:none;
+border-radius:10px;
+font-weight:bold;
 }
 
 .ip{background:#00ffcc;color:black;}
 .dc{background:#5865F2;}
-.shop{background:#facc15;color:black;}
-.rank{background:#22c55e;}
-.support{background:#ef4444;}
-
-.status{
-  margin-top:10px;
-}
 </style>
 </head>
 
 <body>
 
 <div class="nav">
-  <h2>SiumCraft</h2>
-  <div>
-    <a href="index.html">Ana Sayfa</a>
-    <a href="shop.html">Mağaza</a>
-    <a href="tierlist.html">Sıralama</a>
-    <a href="support.html">Destek</a>
-  </div>
+<h2>SiumCraft</h2>
+<div>
+<a href="index.html">Ana Sayfa</a>
+<a href="tierlist.html">Sıralama</a>
+<a href="shop.html">Mağaza</a>
+<a href="support.html">Destek</a>
+</div>
 </div>
 
 <div class="hero">
+<h1>SiumCraft Sunucu</h1>
 
-<h1>SiumCraft Panel</h1>
+<button class="ip" onclick="copyIP()">IP Kopyala</button>
+<button class="dc" onclick="dc()">Discord</button>
 
-<div>
-  <button class="btn ip" onclick="kopyala()">IP Kopyala</button>
-  <button class="btn dc" onclick="discord()">Discord</button>
-</div>
-
-<div>
-  <button class="btn shop" onclick="git('shop.html')">Mağaza</button>
-  <button class="btn rank" onclick="git('tierlist.html')">Sıralama</button>
-  <button class="btn support" onclick="git('support.html')">Destek</button>
-</div>
-
-<p class="status" id="durum">Yükleniyor...</p>
-
+<p id="status">Yükleniyor...</p>
 </div>
 
 <script>
-
-function git(x){
-  window.location.href=x;
+function copyIP(){
+navigator.clipboard.writeText("siumcraft.aternos.me");
+alert("IP kopyalandı!");
 }
 
-function kopyala(){
-  navigator.clipboard.writeText("siumcraft.aternos.me");
-  alert("IP kopyalandı!");
+function dc(){
+window.location.href="https://discord.gg/SiumCraft";
 }
 
-function discord(){
-  window.location.href="https://discord.gg/SiumCraft";
+async function load(){
+let r = await fetch("https://api.mcsrvstat.us/2/siumcraft.aternos.me");
+let d = await r.json();
+
+if(d.online){
+document.getElementById("status").innerText =
+"🟢 "+d.players.online+" oyuncu aktif";
+}else{
+document.getElementById("status").innerText =
+"🔴 Sunucu kapalı";
+}
 }
 
-// SERVER
-async function durum(){
-  let res = await fetch("https://api.mcsrvstat.us/2/siumcraft.aternos.me");
-  let data = await res.json();
-
-  if(data.online){
-    document.getElementById("durum").innerHTML =
-    "🟢 "+data.players.online+" oyuncu aktif";
-  }else{
-    document.getElementById("durum").innerHTML =
-    "🔴 Sunucu offline";
-  }
-}
-
-durum();
-
+load();
 </script>
 
 </body>
 </html>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Giriş</title>
-
-<style>
-body{background:#020617;color:white;text-align:center;font-family:sans-serif;margin-top:100px;}
-input{padding:10px;border-radius:10px;border:none;margin:5px;}
-button{padding:10px 20px;background:#22c55e;border:none;border-radius:10px;}
-</style>
-</head>
-
-<body>
