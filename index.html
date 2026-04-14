@@ -5,23 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SiumCraft</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<!-- Daha güzel font -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
-body {
+* {
   margin: 0;
-  font-family: 'Press Start 2P', cursive;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Orbitron', sans-serif;
   color: white;
   overflow-x: hidden;
 }
 
-/* PARTICLE BACKGROUND */
+/* FULL BACKGROUND */
 #bgCanvas {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   z-index: -1;
   background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
 }
@@ -31,49 +37,45 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(0,0,0,0.8);
-  padding: 15px 30px;
-  position: sticky;
-  top: 0;
+  background: rgba(0,0,0,0.85);
+  padding: 15px 40px;
+  position: fixed;
+  width: 100%;
+  z-index: 10;
 }
 
 .logo {
   color: #00ffcc;
-  text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+  font-weight: bold;
 }
 
-/* MENU */
 .navbar ul {
   display: flex;
   list-style: none;
 }
 
 .navbar ul li {
-  margin-left: 20px;
+  margin-left: 25px;
 }
 
 .navbar ul li a {
   color: white;
   text-decoration: none;
-  transition: 0.3s;
+  cursor: pointer;
 }
 
-.navbar ul li a:hover {
-  color: #00ffcc;
-}
-
-/* HERO */
-.hero {
-  text-align: center;
+/* SECTIONS */
+.section {
+  min-height: 100vh;
   padding: 120px 20px;
+  text-align: center;
 }
 
 .hero h1 {
-  font-size: 20px;
+  font-size: 40px;
 }
 
 .hero p {
-  font-size: 10px;
   margin: 20px 0;
 }
 
@@ -81,127 +83,82 @@ body {
 .button {
   background: #00ffcc;
   padding: 12px 25px;
-  border-radius: 10px;
+  border-radius: 8px;
   color: black;
   text-decoration: none;
-  transition: 0.3s;
-  display: inline-block;
   margin: 10px;
-}
-
-.button:hover {
-  transform: scale(1.1);
-  background: #00ccaa;
-}
-
-/* SECTION */
-.section {
-  padding: 60px 20px;
-  text-align: center;
-  background: rgba(0,0,0,0.6);
+  display: inline-block;
 }
 
 /* CARDS */
 .cards {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
 .card {
-  background: rgba(0,0,0,0.8);
+  background: rgba(0,0,0,0.7);
   padding: 20px;
-  border-radius: 15px;
+  border-radius: 10px;
   width: 250px;
-  transition: 0.3s;
-}
-
-.card:hover {
-  transform: translateY(-10px);
-}
-
-/* FOOTER */
-.footer {
-  background: black;
-  text-align: center;
-  padding: 20px;
-  font-size: 10px;
-}
-
-/* ANIMATION */
-.fade-in {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeIn 1s forwards;
-}
-
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- BACKGROUND -->
 <canvas id="bgCanvas"></canvas>
 
 <!-- NAVBAR -->
 <nav class="navbar">
   <div class="logo">SiumCraft</div>
   <ul>
-    <li><a href="#">Ana Sayfa</a></li>
-    <li><a href="#">Sunucu</a></li>
-    <li><a href="#">Mağaza</a></li>
-    <li><a href="#">İletişim</a></li>
+    <li><a onclick="scrollToSection('home')">Ana Sayfa</a></li>
+    <li><a onclick="scrollToSection('server')">Sunucu</a></li>
+    <li><a onclick="scrollToSection('shop')">Mağaza</a></li>
+    <li><a onclick="scrollToSection('contact')">İletişim</a></li>
   </ul>
 </nav>
 
-<!-- HERO -->
-<section class="hero fade-in">
-  <h1>SiumCraft Sunucusuna Hoşgeldin</h1>
-  <p>En iyi Minecraft deneyimi burada!</p>
+<!-- HOME -->
+<section id="home" class="section hero">
+  <h1>SiumCraft</h1>
+  <p>En iyi Minecraft deneyimi!</p>
+  <p id="players">Yükleniyor...</p>
 
-  <p id="players">Oyuncular yükleniyor...</p>
-
-  <a href="#" class="button" onclick="copyIP()">IP Kopyala</a>
-  <a href="https://discord.gg/SiumCraft" class="button">Discord Katıl</a>
-  <a href="minecraft://connect/siumcraft.aternos.me" class="button">Tek Tıkla Katıl</a>
+  <a class="button" onclick="copyIP()">IP Kopyala</a>
+  <a href="minecraft://connect/siumcraft.aternos.me" class="button">Katıl</a>
 </section>
 
-<!-- FEATURES -->
-<section class="section">
-  <h2>Özellikler</h2>
+<!-- SERVER -->
+<section id="server" class="section">
+  <h2>Sunucu</h2>
+  <p>IP: siumcraft.aternos.me</p>
+</section>
+
+<!-- SHOP -->
+<section id="shop" class="section">
+  <h2>Mağaza</h2>
   <div class="cards">
-
-    <div class="card">
-      <h3>⚔️ Smp</h3>
-      <p>Efsane Smp sistemi</p>
-    </div>
-
-    <div class="card">
-      <h3>💰 Ekonomi</h3>
-      <p>Gelişmiş para sistemi</p>
-    </div>
-
-    <div class="card">
-      <h3>👑 Rank</h3>
-      <p>Özel rank ve yetkiler</p>
-    </div>
-
+    <div class="card">Gridük - 250₺</div>
+    <div class="card">Arşidük+ - 500₺</div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<div class="footer">
-  © 2026 SiumCraft
-</div>
+<!-- CONTACT -->
+<section id="contact" class="section">
+  <h2>İletişim</h2>
+  <p>Discord: eklenecek</p>
+</section>
 
 <script>
+// SCROLL
+function scrollToSection(id) {
+  document.getElementById(id).scrollIntoView({ behavior: "smooth" });
+}
+
 // PARTICLES
 const canvas = document.getElementById("bgCanvas");
 const ctx = canvas.getContext("2d");
@@ -210,60 +167,41 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let particles = [];
-
 for (let i = 0; i < 100; i++) {
   particles.push({
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
     vx: Math.random() * 0.5,
-    vy: Math.random() * 0.5,
-    size: Math.random() * 2
+    vy: Math.random() * 0.5
   });
 }
 
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-
   particles.forEach(p => {
     p.x += p.vx;
     p.y += p.vy;
-
     if (p.x > canvas.width) p.x = 0;
     if (p.y > canvas.height) p.y = 0;
-
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
     ctx.fillStyle = "#00ffcc";
-    ctx.fill();
+    ctx.fillRect(p.x, p.y, 2, 2);
   });
-
   requestAnimationFrame(animate);
 }
-
 animate();
 
-window.addEventListener("resize", () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-});
-
-// PLAYER API
+// API
 fetch("https://api.mcsrvstat.us/2/siumcraft.aternos.me")
 .then(res => res.json())
 .then(data => {
-  if(data.online){
-    document.getElementById("players").innerText =
-      "🟢 Online: " + data.players.online + " oyuncu";
-  } else {
-    document.getElementById("players").innerText =
-      "🔴 Sunucu kapalı";
-  }
+  document.getElementById("players").innerText =
+    data.online ? "🟢 " + data.players.online + " oyuncu" : "🔴 Kapalı";
 });
 
-// COPY IP
+// COPY
 function copyIP() {
   navigator.clipboard.writeText("siumcraft.aternos.me");
-  alert("IP kopyalandı: siumcraft.aternos.me");
+  alert("IP kopyalandı!");
 }
 </script>
 
