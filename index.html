@@ -142,25 +142,3 @@ button{padding:10px 20px;background:#22c55e;border:none;border-radius:10px;}
 </head>
 
 <body>
-
-<h1>🔥 SiumCraft GOD PANEL</h1>
-
-<input id="nick" placeholder="Nick"><br>
-<input id="pass" placeholder="Şifre" type="password"><br><br>
-
-<button onclick="giris()">Giriş Yap</button>
-
-<script>
-function giris(){
-let nick=document.getElementById("nick").value;
-let pass=document.getElementById("pass").value;
-
-if(!nick || !pass) return alert("Doldur!");
-
-localStorage.setItem("nick",nick);
-window.location.href="panel.html";
-}
-</script>
-
-</body>
-</html>
