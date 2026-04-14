@@ -1,29 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Destek</title>
-<link rel="stylesheet" href="style.css">
-</head>
+<section id="support" class="section">
+  <h2>Destek</h2>
+  <p>Bir sorun mu var? Formu doldur gönder 👇</p>
 
-<body>
+  <div style="background:rgba(0,0,0,0.7);padding:20px;border-radius:10px;width:300px;max-width:90%;">
+    
+    <!-- KATEGORİ -->
+    <select id="kategori" style="width:100%;padding:10px;margin-bottom:10px;border:none;border-radius:5px;">
+      <option>Yetkili Alım</option>
+      <option>Hile İtiraz</option>
+      <option>Mute İtiraz</option>
+      <option>Şikayet</option>
+    </select>
 
-<div class="header">
-<span class="menu-btn" onclick="toggleMenu()">☰</span>
-</div>
+    <!-- İSİM -->
+    <input id="isim" placeholder="Minecraft İsmin"
+    style="width:100%;padding:10px;margin-bottom:10px;border:none;border-radius:5px;">
 
-<div id="menu" class="sidebar">
-<a href="index.html">Anasayfa</a>
-<a href="oyunlar.html">Oyunlar</a>
-<a href="magaza.html">Mağaza</a>
-<a href="destek.html">Destek</a>
-</div>
+    <!-- MESAJ -->
+    <textarea id="mesaj" placeholder="Mesajını yaz..."
+    style="width:100%;padding:10px;height:100px;border:none;border-radius:5px;"></textarea>
 
-<div class="card">
-<h1>Destek</h1>
-<p>Discord: yakında</p>
-</div>
+    <!-- BUTON -->
+    <button onclick="gonder()" class="button" style="width:100%;margin-top:10px;">
+      Gönder
+    </button>
 
-<script src="script.js"></script>
-
-</body>
-</html>
+  </div>
+</section>
