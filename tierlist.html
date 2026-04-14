@@ -2,54 +2,106 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Sıralama</title>
+<title>SiumCraft Leaderboard</title>
 
 <style>
 body{
-  background:#0f172a;
-  color:white;
+  margin:0;
   font-family:sans-serif;
+  background:linear-gradient(to bottom,#020617,#020617,#0f172a);
+  color:white;
   text-align:center;
 }
 
-.box{
-  max-width:500px;
-  margin:40px auto;
-  background:#020617;
-  padding:20px;
-  border-radius:15px;
+/* BAŞLIK */
+h1{
+  margin-top:20px;
+  font-size:35px;
+  text-shadow:0 0 15px #22c55e;
 }
 
+/* KUTU */
+.box{
+  max-width:700px;
+  margin:30px auto;
+}
+
+/* PLAYER */
 .player{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  background:#111;
-  margin:10px 0;
-  padding:10px;
-  border-radius:10px;
+  background:rgba(0,0,0,0.7);
+  margin:12px;
+  padding:15px;
+  border-radius:15px;
+  backdrop-filter:blur(5px);
+  transition:0.3s;
 }
 
-.name{
+.player:hover{
+  transform:scale(1.07);
+  box-shadow:0 0 15px #22c55e;
+}
+
+/* TOP 3 */
+.top1{
+  background:linear-gradient(90deg,gold,#fff);
+  color:black;
+  box-shadow:0 0 20px gold;
+}
+.top2{
+  background:linear-gradient(90deg,silver,#ddd);
+  color:black;
+}
+.top3{
+  background:linear-gradient(90deg,#cd7f32,#a16207);
+}
+
+/* SOL */
+.left{
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:12px;
 }
 
 img{
-  width:30px;
-  border-radius:5px;
+  width:45px;
+  border-radius:10px;
+}
+
+/* SAĞ */
+.right{
+  text-align:right;
 }
 
 .kd{
   color:#22c55e;
+  font-size:14px;
 }
+
+/* RANK ROZET */
+.rank{
+  padding:3px 8px;
+  border-radius:8px;
+  font-size:12px;
+  margin-left:5px;
+}
+
+.vip{background:gold;color:black;}
+.mvp{background:#a855f7;}
+
+a{
+  color:white;
+  text-decoration:none;
+}
+
 </style>
 </head>
 
 <body>
 
-<h1>🏆 Kill Sıralaması</h1>
+<h1>🏆 SiumCraft Leaderboard</h1>
 
 <div class="box" id="liste">Yükleniyor...</div>
 
@@ -63,22 +115,46 @@ let players = await res.json();
 // SIRALA
 players.sort((a,b)=>b.kills - a.kills);
 
-let htmlK = "";
+let html="";
 
 players.forEach((p,i)=>{
-htmlK += `
-<div class="player">
-  <div class="name">
+
+let kd = (p.kills / (p.deaths||1)).toFixed(2);
+
+// TOP RENK
+let cls="";
+if(i==0) cls="top1";
+if(i==1) cls="top2";
+if(i==2) cls="top3";
+
+// RANK
+let rank="";
+if(p.kills>40) rank='<span class="rank mvp">MVP</span>';
+else if(p.kills>20) rank='<span class="rank vip">VIP</span>';
+
+html+=`
+<div class="player ${cls}">
+
+  <div class="left">
     <img src="https://mc-heads.net/avatar/${p.name}">
-    #${i+1} ${p.name}
+    <div>
+      <a href="profil.html?nick=${p.name}">
+      <b>#${i+1} ${p.name}</b>
+      </a>
+      ${rank}
+    </div>
   </div>
-  <div class="kd">
-    ${p.kills} / ${p.deaths}
+
+  <div class="right">
+    <div>${p.kills} ⚔️ / ${p.deaths} ☠️</div>
+    <div class="kd">KD: ${kd}</div>
   </div>
-</div>`;
+
+</div>
+`;
 });
 
-document.getElementById("liste").innerHTML = htmlK;
+document.getElementById("liste").innerHTML=html;
 
 }
 
