@@ -1,224 +1,60 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>SiumCraft Ultimate</title>
+<title>Leaderboard</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif;}
-
 body{
-  background:linear-gradient(270deg,#020617,#0f172a,#020617);
-  background-size:600% 600%;
-  animation:bg 8s infinite;
-  color:white;
-  text-align:center;
-  overflow-x:hidden;
+background:#020617;
+color:white;
+font-family:sans-serif;
+text-align:center;
 }
 
-@keyframes bg{
-  0%{background-position:0%}
-  50%{background-position:100%}
-  100%{background-position:0%}
-}
-
-/* BAŞLIK */
-h1{
-  margin-top:20px;
-  font-size:40px;
-  text-shadow:0 0 20px #22c55e;
-}
-
-/* KUTU */
-.box{
-  max-width:800px;
-  margin:30px auto;
-}
-
-/* PLAYER */
 .player{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background:rgba(0,0,0,0.6);
-  margin:15px;
-  padding:18px;
-  border-radius:18px;
-  backdrop-filter:blur(10px);
-  transition:0.3s;
+display:flex;
+justify-content:space-between;
+margin:10px;
+padding:15px;
+background:#111;
+border-radius:10px;
 }
 
-.player:hover{
-  transform:scale(1.08);
-  box-shadow:0 0 25px #22c55e;
-}
-
-/* TOP1 EFEKT */
-.top1{
-  animation:glow 1s infinite alternate;
-}
-@keyframes glow{
-  from{box-shadow:0 0 10px gold;}
-  to{box-shadow:0 0 35px gold;}
-}
-
-.top2{background:linear-gradient(90deg,#c0c0c0,#eee);color:black;}
-.top3{background:linear-gradient(90deg,#cd7f32,#a16207);}
-
-/* SOL */
-.left{
-  display:flex;
-  align-items:center;
-  gap:15px;
-}
-
-img{
-  width:50px;
-  border-radius:10px;
-}
-
-/* SAĞ */
-.right{
-  text-align:right;
-}
-
-.kd{
-  color:#22c55e;
-}
-
-/* RANK */
-.rank{
-  padding:4px 10px;
-  border-radius:10px;
-  font-size:12px;
-  margin-left:5px;
-}
-
-.vip{background:gold;color:black;}
-.mvp{background:#a855f7;}
-.legend{background:#22c55e;}
-
-/* BAR */
-.bar{
-  height:6px;
-  background:#111;
-  margin-top:5px;
-  border-radius:10px;
-  overflow:hidden;
-}
-
-.fill{
-  height:100%;
-  background:#22c55e;
-}
-
-/* NOTIFICATION */
-.notify{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#22c55e;
-  color:black;
-  padding:10px 20px;
-  border-radius:10px;
-  display:none;
-}
-
+.top1{box-shadow:0 0 20px gold;}
+.top2{background:silver;color:black;}
+.top3{background:#cd7f32;}
 </style>
 </head>
 
 <body>
 
-<h1>🔥 SiumCraft ULTIMATE 🔥</h1>
-
-<div class="box" id="liste">Yükleniyor...</div>
-
-<div class="notify" id="notify">Yeni lider var!</div>
-
-<audio id="ses" src="https://www.myinstants.com/media/sounds/minecraft-level-up.mp3"></audio>
+<h1>🏆 Leaderboard</h1>
+<div id="list"></div>
 
 <script>
+async function load(){
+let r = await fetch("data.json");
+let p = await r.json();
 
-let eskiLider = "";
-
-// BİLDİRİM
-function bildirim(){
-let n = document.getElementById("notify");
-n.style.display="block";
-
-document.getElementById("ses").play();
-
-setTimeout(()=>{
-n.style.display="none";
-},3000);
-}
-
-// YÜKLE
-async function yukle(){
-
-let res = await fetch("data.json");
-let players = await res.json();
-
-// SIRALA
-players.sort((a,b)=>b.kills - a.kills);
-
-// LİDER DEĞİŞTİ Mİ
-if(players[0]?.name !== eskiLider && eskiLider!=""){
-bildirim();
-}
-eskiLider = players[0]?.name;
-
-let max = players[0]?.kills || 1;
+p.sort((a,b)=>b.kills-a.kills);
 
 let html="";
 
-players.forEach((p,i)=>{
-
-let kd = (p.kills/(p.deaths||1)).toFixed(2);
-
-// TOP
-let cls="";
-if(i==0) cls="top1";
-if(i==1) cls="top2";
-if(i==2) cls="top3";
-
-// RANK
-let rank="";
-if(p.kills>80) rank='<span class="rank legend">LEGEND</span>';
-else if(p.kills>40) rank='<span class="rank mvp">MVP</span>';
-else if(p.kills>20) rank='<span class="rank vip">VIP</span>';
-
-// BAR
-let yuzde = (p.kills/max)*100;
+p.forEach((x,i)=>{
+let cls = i==0?"top1":i==1?"top2":i==2?"top3":"";
 
 html+=`
 <div class="player ${cls}">
-  <div class="left">
-    <img src="https://mc-heads.net/avatar/${p.name}">
-    <div>
-      <b>#${i+1} ${p.name}</b>
-      ${rank}
-      <div class="bar">
-        <div class="fill" style="width:${yuzde}%"></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="right">
-    <div>${p.kills} ⚔️ / ${p.deaths} ☠️</div>
-    <div class="kd">KD: ${kd}</div>
-  </div>
-</div>
-`;
+<span>#${i+1} ${x.name}</span>
+<span>${x.kills}/${x.deaths}</span>
+</div>`;
 });
 
-document.getElementById("liste").innerHTML=html;
-
+document.getElementById("list").innerHTML=html;
 }
 
-yukle();
-setInterval(yukle,60000);
-
+load();
 </script>
 
 </body>
