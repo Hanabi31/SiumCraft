@@ -1,37 +1,27 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>Panel</title>
 
 <style>
 body{background:#111;color:white;font-family:sans-serif;}
-.top{padding:15px;background:#000;}
 .card{background:#222;padding:20px;margin:20px;border-radius:15px;}
-button{padding:10px 15px;border:none;border-radius:10px;margin:5px;}
+button{padding:10px;border:none;border-radius:10px;margin:5px;}
 .start{background:#22c55e;}
 .stop{background:#ef4444;}
 .create{background:#00ffcc;color:black;}
-.delete{background:#ff4444;}
 </style>
 </head>
 
 <body>
 
-<div class="top">
 <h2 id="user"></h2>
-</div>
 
 <div class="card">
 <h3>Sunucu Oluştur</h3>
 
 <input id="name" placeholder="Sunucu adı"><br><br>
-
-<select id="version">
-<option>1.20</option>
-<option>1.19</option>
-<option>1.18</option>
-</select><br><br>
 
 <button class="create" onclick="olustur()">Oluştur</button>
 </div>
@@ -43,40 +33,33 @@ button{padding:10px 15px;border:none;border-radius:10px;margin:5px;}
 document.getElementById("user").innerText =
 "👤 "+localStorage.getItem("nick");
 
-// VERİ
 let servers = JSON.parse(localStorage.getItem("servers")||"[]");
 
-// GÖSTER
 function liste(){
 let html="";
 servers.forEach((s,i)=>{
 html+=`
 <div class="card">
 <h3>${s.name}</h3>
-<p>Versiyon: ${s.version}</p>
 <p>Durum: ${s.status}</p>
-<p>IP: ${s.ip || "-"}</p>
+<p>IP: ${s.ip||"-"}</p>
 
 <button class="start" onclick="ac(${i})">Aç</button>
 <button class="stop" onclick="kapat(${i})">Kapat</button>
-<button class="delete" onclick="sil(${i})">Sil</button>
 </div>
 `;
 });
 document.getElementById("servers").innerHTML=html;
 }
+
 liste();
 
-// OLUŞTUR
 function olustur(){
 let name=document.getElementById("name").value;
-let version=document.getElementById("version").value;
-
 if(!name) return alert("İsim gir!");
 
 servers.push({
 name,
-version,
 status:"Kapalı",
 ip:""
 });
@@ -85,20 +68,18 @@ kaydet();
 liste();
 }
 
-// AÇ
 function ac(i){
 servers[i].status="Başlatılıyor...";
 liste();
 
 setTimeout(()=>{
 servers[i].status="Açık";
-servers[i].ip="play.siumcraft.net";
+servers[i].ip="play.siumhost.net";
 kaydet();
 liste();
 },3000);
 }
 
-// KAPAT
 function kapat(i){
 servers[i].status="Kapatılıyor...";
 liste();
@@ -111,14 +92,6 @@ liste();
 },2000);
 }
 
-// SİL
-function sil(i){
-servers.splice(i,1);
-kaydet();
-liste();
-}
-
-// KAYDET
 function kaydet(){
 localStorage.setItem("servers",JSON.stringify(servers));
 }
