@@ -251,5 +251,60 @@ function copyIP(){
 }
 </script>
 
+  <script>
+// senin diğer kodların (particles, api vs)
+</script>
+
+<!-- BURAYA EKLE -->
+<script>
+function gonder(){
+  let kategori = document.getElementById("kategori").value;
+  let isim = document.getElementById("isim").value;
+  let mesaj = document.getElementById("mesaj").value;
+
+  if(!isim || !mesaj){
+    alert("Tüm alanları doldur!");
+    return;
+  }
+
+  const webhook = "BURAYA_WEBHOOK_URL";
+
+  const data = {
+    username: "SiumCraft Destek",
+    avatar_url: "https://mc-heads.net/avatar/" + isim,
+    embeds: [{
+      title: "📩 Yeni Destek Talebi",
+      color: 0x00ffcc,
+      thumbnail: {
+        url: "https://mc-heads.net/avatar/" + isim
+      },
+      fields: [
+        { name: "👤 Oyuncu", value: isim, inline: true },
+        { name: "📂 Kategori", value: kategori, inline: true },
+        { name: "💬 Mesaj", value: mesaj }
+      ],
+      footer: { text: "SiumCraft • Destek Sistemi" },
+      timestamp: new Date()
+    }]
+  };
+
+  fetch(webhook, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  })
+  .then(() => {
+    alert("✅ Talebin gönderildi!");
+  })
+  .catch(() => {
+    alert("❌ Gönderilemedi!");
+  });
+}
+</script>
+
+</body>
+</html>
 </body>
 </html>
