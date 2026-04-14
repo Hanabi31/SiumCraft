@@ -166,9 +166,32 @@ body{
 <!-- DESTEK (SADECE EKLENEN) -->
 <section id="support" class="section">
   <h2>Destek</h2>
-  <p>Bir sorun mu var? Bizimle iletişime geç!</p>
-  <p>📩 Discord: discord.gg/siumcraft</p>
-  <p>💬 Oyun içinden yetkililere yazabilirsin</p>
+  <p>Bir sorun mu var? Formu doldur gönder 👇</p>
+
+  <div style="background:rgba(0,0,0,0.7);padding:20px;border-radius:10px;width:300px;max-width:90%;">
+    
+    <!-- KATEGORİ -->
+    <select id="kategori" style="width:100%;padding:10px;margin-bottom:10px;border:none;border-radius:5px;">
+      <option>Yetkili Alım</option>
+      <option>Hile İtiraz</option>
+      <option>Mute İtiraz</option>
+      <option>Şikayet</option>
+    </select>
+
+    <!-- İSİM -->
+    <input id="isim" placeholder="Minecraft İsmin"
+    style="width:100%;padding:10px;margin-bottom:10px;border:none;border-radius:5px;">
+
+    <!-- MESAJ -->
+    <textarea id="mesaj" placeholder="Mesajını yaz..."
+    style="width:100%;padding:10px;height:100px;border:none;border-radius:5px;"></textarea>
+
+    <!-- BUTON -->
+    <button onclick="gonder()" class="button" style="width:100%;margin-top:10px;">
+      Gönder
+    </button>
+
+  </div>
 </section>
 
 <!-- CONTACT -->
