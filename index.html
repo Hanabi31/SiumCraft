@@ -1,30 +1,101 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>SiumHost</title>
 
 <style>
-body{background:#0a0a0a;color:white;text-align:center;font-family:sans-serif;margin-top:100px;}
-input{padding:10px;border-radius:10px;border:none;}
-button{padding:10px 20px;background:#00ffcc;border:none;border-radius:10px;}
+body{
+  margin:0;
+  font-family:sans-serif;
+  color:white;
+  background:url("https://wallpapercave.com/wp/wp2757874.jpg") center/cover no-repeat;
+}
+
+.box{
+  text-align:center;
+  margin-top:150px;
+  background:rgba(0,0,0,0.7);
+  padding:30px;
+  width:300px;
+  margin-left:auto;
+  margin-right:auto;
+  border-radius:20px;
+}
+
+button{
+  padding:10px 20px;
+  margin:10px;
+  border:none;
+  border-radius:10px;
+}
+.start{background:#22c55e;}
+.stop{background:#ef4444;}
 </style>
 </head>
 
 <body>
 
-<h1>🟢 SiumHost Panel</h1>
+<div class="box">
+<h2>SiumHost Panel</h2>
 
-<input id="nick" placeholder="Kullanıcı adı"><br><br>
-<button onclick="giris()">Giriş Yap</button>
+<p id="durum">Yükleniyor...</p>
+<p id="ip"></p>
+
+<button class="start" onclick="ac()">Sunucu Aç</button>
+<button class="stop" onclick="kapat()">Sunucu Kapat</button>
+</div>
 
 <script>
-function giris(){
-let nick = document.getElementById("nick").value;
-if(!nick) return alert("Nick gir!");
-localStorage.setItem("nick",nick);
-window.location.href="panel.html";
+
+let aktif = false;
+
+// AÇ
+function ac(){
+document.getElementById("durum").innerText="Başlatılıyor...";
+setTimeout(()=>{
+aktif=true;
+guncelle();
+},3000);
 }
+
+// KAPAT
+function kapat(){
+document.getElementById("durum").innerText="Kapatılıyor...";
+setTimeout(()=>{
+aktif=false;
+guncelle();
+},2000);
+}
+
+// GÜNCELLE
+function guncelle(){
+if(aktif){
+document.getElementById("durum").innerText="🟢 Açık";
+document.getElementById("ip").innerText="IP: siumcraft.aternos.me";
+}else{
+document.getElementById("durum").innerText="🔴 Kapalı";
+document.getElementById("ip").innerText="";
+}
+}
+
+// GERÇEK SUNUCU DURUM (API)
+async function durum(){
+let res = await fetch("https://api.mcsrvstat.us/2/siumcraft.aternos.me");
+let data = await res.json();
+
+if(data.online){
+document.getElementById("durum").innerText =
+"🟢 Gerçek Sunucu Açık ("+data.players.online+" kişi)";
+}else{
+document.getElementById("durum").innerText =
+"🔴 Gerçek Sunucu Kapalı";
+}
+}
+
+durum();
+setInterval(durum,30000);
+
 </script>
 
 </body>
