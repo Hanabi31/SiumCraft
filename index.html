@@ -2,131 +2,29 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SiumCraft</title>
+<title>SiumHost</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif;}
-
-body{
-  height:100vh;
-  background:url("https://wallpapercave.com/wp/wp2757874.jpg") no-repeat center center/cover;
-  color:white;
-}
-
-/* NAVBAR */
-.nav{
-  position:fixed;
-  width:100%;
-  display:flex;
-  justify-content:space-between;
-  padding:15px;
-  background:rgba(0,0,0,0.6);
-}
-
-.nav a{
-  color:white;
-  margin:10px;
-  text-decoration:none;
-}
-
-/* HERO */
-.hero{
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  background:rgba(0,0,0,0.5);
-}
-
-/* BUTON */
-.btn{
-  padding:15px 25px;
-  margin:10px;
-  border:none;
-  border-radius:12px;
-  font-size:16px;
-  font-weight:bold;
-}
-
-/* RENKLER */
-.ip{background:#00ffcc;color:black;}
-.dc{background:#5865F2;}
-.shop{background:#facc15;color:black;}
-.rank{background:#22c55e;}
-.support{background:#ef4444;}
-
-.status{
-  margin-top:10px;
-  font-size:18px;
-}
+body{background:#0a0a0a;color:white;text-align:center;font-family:sans-serif;margin-top:100px;}
+input{padding:10px;border-radius:10px;border:none;}
+button{padding:10px 20px;background:#00ffcc;border:none;border-radius:10px;}
 </style>
 </head>
 
 <body>
 
-<!-- NAV -->
-<div class="nav">
-  <h2>SiumCraft</h2>
-  <div>
-    <a href="index.html">Ana Sayfa</a>
-    <a href="shop.html">Mağaza</a>
-    <a href="tierlist.html">Sıralama</a>
-    <a href="support.html">Destek</a>
-  </div>
-</div>
+<h1>🟢 SiumHost Panel</h1>
 
-<!-- HERO -->
-<div class="hero">
-
-<h1 style="font-size:40px;">SiumCraft Panel</h1>
-
-<div>
-  <button class="btn ip" onclick="kopyala()">IP Kopyala</button>
-  <button class="btn dc" onclick="discord()">Discord</button>
-</div>
-
-<div>
-  <button class="btn shop" onclick="window.location.href='shop.html'">Mağaza</button>
-  <button class="btn rank" onclick="window.location.href='tierlist.html'">Sıralama</button>
-  <button class="btn support" onclick="window.location.href='support.html'">Destek</button>
-</div>
-
-<p class="status" id="durum">Yükleniyor...</p>
-
-</div>
+<input id="nick" placeholder="Kullanıcı adı"><br><br>
+<button onclick="giris()">Giriş Yap</button>
 
 <script>
-
-// IP
-function kopyala(){
-navigator.clipboard.writeText("siumcraft.aternos.me");
-alert("IP kopyalandı!");
+function giris(){
+let nick = document.getElementById("nick").value;
+if(!nick) return alert("Nick gir!");
+localStorage.setItem("nick",nick);
+window.location.href="panel.html";
 }
-
-// DISCORD
-function discord(){
-window.location.href="https://discord.gg/SiumCraft";
-}
-
-// SERVER
-async function durum(){
-let res = await fetch("https://api.mcsrvstat.us/2/siumcraft.aternos.me");
-let data = await res.json();
-
-if(data.online){
-document.getElementById("durum").innerHTML =
-"🟢 "+data.players.online+" oyuncu aktif";
-}else{
-document.getElementById("durum").innerHTML =
-"🔴 Sunucu offline";
-}
-}
-
-durum();
-
 </script>
 
 </body>
