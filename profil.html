@@ -1,24 +1,16 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Profil</title>
-</head>
-
 <body style="background:#111;color:white;text-align:center;">
 
 <h1 id="nick"></h1>
-<img id="skin" width="100">
+<img id="skin" width="120">
 
 <script>
+let n = new URLSearchParams(location.search).get("nick");
 
-let url = new URLSearchParams(window.location.search);
-let nick = url.get("nick");
-
-document.getElementById("nick").innerText = nick;
+document.getElementById("nick").innerText=n;
 document.getElementById("skin").src =
-"https://mc-heads.net/body/"+nick;
-
+"https://mc-heads.net/body/"+n;
 </script>
 
 </body>
