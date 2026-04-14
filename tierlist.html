@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>SiumCraft Elite</title>
+<title>SiumCraft Ultimate</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif;}
@@ -10,9 +10,10 @@
 body{
   background:linear-gradient(270deg,#020617,#0f172a,#020617);
   background-size:600% 600%;
-  animation:bg 10s infinite;
+  animation:bg 8s infinite;
   color:white;
   text-align:center;
+  overflow-x:hidden;
 }
 
 @keyframes bg{
@@ -52,13 +53,13 @@ h1{
   box-shadow:0 0 25px #22c55e;
 }
 
-/* TOP 1 ANİMASYON */
+/* TOP1 EFEKT */
 .top1{
   animation:glow 1s infinite alternate;
 }
 @keyframes glow{
   from{box-shadow:0 0 10px gold;}
-  to{box-shadow:0 0 30px gold;}
+  to{box-shadow:0 0 35px gold;}
 }
 
 .top2{background:linear-gradient(90deg,#c0c0c0,#eee);color:black;}
@@ -81,7 +82,6 @@ img{
   text-align:right;
 }
 
-/* KD */
 .kd{
   color:#22c55e;
 }
@@ -112,17 +112,48 @@ img{
   background:#22c55e;
 }
 
+/* NOTIFICATION */
+.notify{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#22c55e;
+  color:black;
+  padding:10px 20px;
+  border-radius:10px;
+  display:none;
+}
+
 </style>
 </head>
 
 <body>
 
-<h1>🔥 SiumCraft Elite Leaderboard 🔥</h1>
+<h1>🔥 SiumCraft ULTIMATE 🔥</h1>
 
 <div class="box" id="liste">Yükleniyor...</div>
 
+<div class="notify" id="notify">Yeni lider var!</div>
+
+<audio id="ses" src="https://www.myinstants.com/media/sounds/minecraft-level-up.mp3"></audio>
+
 <script>
 
+let eskiLider = "";
+
+// BİLDİRİM
+function bildirim(){
+let n = document.getElementById("notify");
+n.style.display="block";
+
+document.getElementById("ses").play();
+
+setTimeout(()=>{
+n.style.display="none";
+},3000);
+}
+
+// YÜKLE
 async function yukle(){
 
 let res = await fetch("data.json");
@@ -131,13 +162,19 @@ let players = await res.json();
 // SIRALA
 players.sort((a,b)=>b.kills - a.kills);
 
+// LİDER DEĞİŞTİ Mİ
+if(players[0]?.name !== eskiLider && eskiLider!=""){
+bildirim();
+}
+eskiLider = players[0]?.name;
+
 let max = players[0]?.kills || 1;
 
 let html="";
 
 players.forEach((p,i)=>{
 
-let kd = (p.kills / (p.deaths||1)).toFixed(2);
+let kd = (p.kills/(p.deaths||1)).toFixed(2);
 
 // TOP
 let cls="";
@@ -151,12 +188,11 @@ if(p.kills>80) rank='<span class="rank legend">LEGEND</span>';
 else if(p.kills>40) rank='<span class="rank mvp">MVP</span>';
 else if(p.kills>20) rank='<span class="rank vip">VIP</span>';
 
-// BAR %
-let yuzde = (p.kills / max)*100;
+// BAR
+let yuzde = (p.kills/max)*100;
 
 html+=`
 <div class="player ${cls}">
-
   <div class="left">
     <img src="https://mc-heads.net/avatar/${p.name}">
     <div>
@@ -172,7 +208,6 @@ html+=`
     <div>${p.kills} ⚔️ / ${p.deaths} ☠️</div>
     <div class="kd">KD: ${kd}</div>
   </div>
-
 </div>
 `;
 });
