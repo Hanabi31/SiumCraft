@@ -1,25 +1,21 @@
 <section id="support" class="section">
-  <h2>Destek Sistemi</h2>
-  <p>Talep oluştur ve yetkililere ulaş 👇</p>
+  <h2>Destek</h2>
+  <p>Bir sorun mu var? Formu doldur gönder 👇</p>
 
-  <div style="background:rgba(0,0,0,0.7);padding:20px;border-radius:10px;width:320px;max-width:90%;">
-
-    <select id="kategori" style="width:100%;padding:10px;margin-bottom:10px;border:none;border-radius:5px;">
-      <option>🎯 Yetkili Alım</option>
-      <option>🚫 Hile İtiraz</option>
-      <option>🔇 Mute İtiraz</option>
-      <option>⚠️ Şikayet</option>
+  <form action="mailto:hanabipvpv8@gmail.com" method="post" enctype="text/plain" style="background:rgba(0,0,0,0.7);padding:20px;border-radius:10px;width:320px;max-width:90%;">
+    
+    <select name="kategori" style="width:100%;padding:10px;margin-bottom:10px;border:none;border-radius:5px;">
+      <option>Yetkili Alım</option>
+      <option>Hile İtiraz</option>
+      <option>Mute İtiraz</option>
+      <option>Şikayet</option>
     </select>
 
-    <input id="isim" placeholder="Minecraft İsmin"
-    style="width:100%;padding:10px;margin-bottom:10px;border:none;border-radius:5px;">
+    <input type="text" name="isim" placeholder="Minecraft İsmin" style="width:100%;padding:10px;margin-bottom:10px;border:none;border-radius:5px;">
 
-    <textarea id="mesaj" placeholder="Detaylı açıklama yaz..."
-    style="width:100%;padding:10px;height:100px;border:none;border-radius:5px;"></textarea>
+    <textarea name="mesaj" placeholder="Mesajını yaz..." style="width:100%;padding:10px;height:100px;border:none;border-radius:5px;"></textarea>
 
-    <button onclick="gonder()" class="button" style="width:100%;margin-top:10px;">
-      🚀 Gönder
-    </button>
+    <button type="submit" class="button" style="width:100%;margin-top:10px;">Gönder</button>
 
-  </div>
+  </form>
 </section>
