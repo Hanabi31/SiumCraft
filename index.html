@@ -40,10 +40,7 @@ body{
   z-index:999;
 }
 
-.logo{
-  color:#00ffcc;
-  font-size:18px;
-}
+.logo{color:#00ffcc;font-size:18px;}
 
 .navbar ul{
   display:flex;
@@ -51,9 +48,7 @@ body{
   flex-wrap:wrap;
 }
 
-.navbar li{
-  margin-left:15px;
-}
+.navbar li{margin-left:15px;}
 
 .navbar a{
   color:white;
@@ -87,6 +82,12 @@ body{
   display:inline-block;
   cursor:pointer;
   font-size:12px;
+  border:none;
+}
+
+/* SLIDER */
+.slider{
+  margin-top:10px;
 }
 
 /* CARDS */
@@ -104,7 +105,7 @@ body{
   width:220px;
 }
 
-/* MOBILE FIX */
+/* MOBILE */
 @media(max-width:600px){
   .hero h1{font-size:30px}
   .navbar a{font-size:10px}
@@ -131,20 +132,24 @@ body{
 <!-- HOME -->
 <section id="home" class="section hero">
   <h1>SiumCraft</h1>
-  <p>Türkiye'nin en iyi Smp sunucusu!</p>
+  <p>Türkiye'nin en iyi survival sunucusu!</p>
   <p id="players">Yükleniyor...</p>
 
   <div>
     <span class="button" onclick="copyIP()">IP Kopyala</span>
     <a href="minecraft://connect/siumcraft.aternos.me" class="button">Katıl</a>
+    <button onclick="toggleMusic()" class="button">Müzik Aç/Kapat</button>
   </div>
+
+  <!-- SES AYARI -->
+  <input class="slider" type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume(this.value)">
 </section>
 
 <!-- SERVER -->
 <section id="server" class="section">
   <h2>Sunucu Bilgisi</h2>
   <p>IP: siumcraft.aternos.me</p>
-  <p>Versiyon: Tüm Sürümler+</p>
+  <p>Versiyon: 1.20+</p>
   <p>Mod: Survival + Ekonomi + Rank</p>
 </section>
 
@@ -152,21 +157,9 @@ body{
 <section id="shop" class="section">
   <h2>Mağaza</h2>
   <div class="cards">
-    <div class="card">
-      <h3>VIP</h3>
-      <p>30₺</p>
-      <p>Özel prefix + kit</p>
-    </div>
-    <div class="card">
-      <h3>Gridük</h3>
-      <p>300₺</p>
-      <p>Daha güçlü avantajlar</p>
-    </div>
-    <div class="card">
-      <h3>Arşidük</h3>
-      <p>500₺</p>
-      <p>Tüm özellikler açık</p>
-    </div>
+    <div class="card"><h3>VIP</h3><p>50₺</p><p>Özel prefix + kit</p></div>
+    <div class="card"><h3>VIP+</h3><p>100₺</p><p>Daha güçlü avantajlar</p></div>
+    <div class="card"><h3>MVP</h3><p>150₺</p><p>Tüm özellikler açık</p></div>
   </div>
 </section>
 
@@ -183,6 +176,8 @@ body{
   <h2>İletişim</h2>
   <p>Discord: discord.gg/siumcraft</p>
 </section>
+
+<audio id="music"></audio>
 
 <script>
 // SCROLL
@@ -232,6 +227,73 @@ fetch("https://api.mcsrvstat.us/2/siumcraft.aternos.me")
 function copyIP(){
   navigator.clipboard.writeText("siumcraft.aternos.me");
   alert("IP kopyalandı!");
+}
+
+// ===== ULTRA MÜZİK SİSTEMİ =====
+const songs=[
+"https://cdn.pixabay.com/audio/2022/03/15/audio_115b9b5d3c.mp3",
+"https://cdn.pixabay.com/audio/2022/10/25/audio_946c0d4c92.mp3",
+"https://cdn.pixabay.com/audio/2021/09/06/audio_7c8a5c6cfa.mp3"
+];
+
+let index=0;
+let playing=false;
+const audio=document.getElementById("music");
+audio.volume=0.5;
+
+// FADE OUT
+function fadeOut(callback){
+  let fade=setInterval(()=>{
+    if(audio.volume>0.05){
+      audio.volume-=0.05;
+    }else{
+      clearInterval(fade);
+      audio.pause();
+      if(callback) callback();
+    }
+  },100);
+}
+
+// FADE IN
+function fadeIn(){
+  audio.volume=0;
+  audio.play();
+  let fade=setInterval(()=>{
+    if(audio.volume<0.5){
+      audio.volume+=0.05;
+    }else{
+      clearInterval(fade);
+    }
+  },100);
+}
+
+// PLAY
+function playMusic(){
+  audio.src=songs[index];
+  fadeIn();
+}
+
+// AUTO NEXT
+audio.addEventListener("ended",()=>{
+  fadeOut(()=>{
+    index=(index+1)%songs.length;
+    playMusic();
+  });
+});
+
+// TOGGLE
+function toggleMusic(){
+  if(!playing){
+    playMusic();
+  }else{
+    fadeOut();
+  }
+  playing=!playing;
+}
+
+// VOLUME
+function setVolume(val){
+  audio.volume=val;
 }
 </script>
 
