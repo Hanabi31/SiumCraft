@@ -1,16 +1,91 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
+<meta charset="UTF-8">
 <title>Sıralama</title>
+
+<style>
+body{
+  background:#0f172a;
+  color:white;
+  font-family:sans-serif;
+  text-align:center;
+}
+
+.box{
+  max-width:500px;
+  margin:40px auto;
+  background:#020617;
+  padding:20px;
+  border-radius:15px;
+}
+
+.player{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:#111;
+  margin:10px 0;
+  padding:10px;
+  border-radius:10px;
+}
+
+.name{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+img{
+  width:30px;
+  border-radius:5px;
+}
+
+.kd{
+  color:#22c55e;
+}
+</style>
 </head>
 
-<body style="background:#111;color:white;text-align:center;">
+<body>
 
-<h1>🏆 Sıralama</h1>
+<h1>🏆 Kill Sıralaması</h1>
 
-<p>1. HanabiPvP - 50 kill</p>
-<p>2. Eymenxr - 40 kill</p>
-<p>3. Oyuncu - 30 kill</p>
+<div class="box" id="liste">Yükleniyor...</div>
+
+<script>
+
+async function yukle(){
+
+let res = await fetch("data.json");
+let players = await res.json();
+
+// SIRALA
+players.sort((a,b)=>b.kills - a.kills);
+
+let htmlK = "";
+
+players.forEach((p,i)=>{
+htmlK += `
+<div class="player">
+  <div class="name">
+    <img src="https://mc-heads.net/avatar/${p.name}">
+    #${i+1} ${p.name}
+  </div>
+  <div class="kd">
+    ${p.kills} / ${p.deaths}
+  </div>
+</div>`;
+});
+
+document.getElementById("liste").innerHTML = htmlK;
+
+}
+
+yukle();
+setInterval(yukle,60000);
+
+</script>
 
 </body>
 </html>
