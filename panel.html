@@ -5,97 +5,30 @@
 <title>Panel</title>
 
 <style>
-body{background:#111;color:white;font-family:sans-serif;}
-.card{background:#222;padding:20px;margin:20px;border-radius:15px;}
-button{padding:10px;border:none;border-radius:10px;margin:5px;}
-.start{background:#22c55e;}
-.stop{background:#ef4444;}
-.create{background:#00ffcc;color:black;}
+body{background:#020617;color:white;font-family:sans-serif;text-align:center;}
+.card{background:#111;padding:20px;margin:20px;border-radius:15px;}
+button{padding:10px 15px;margin:10px;border:none;border-radius:10px;}
 </style>
 </head>
 
 <body>
 
-<h2 id="user"></h2>
+<h1>👤 Hoşgeldin <span id="nick"></span></h1>
 
 <div class="card">
-<h3>Sunucu Oluştur</h3>
-
-<input id="name" placeholder="Sunucu adı"><br><br>
-
-<button class="create" onclick="olustur()">Oluştur</button>
+<button onclick="git('tierlist.html')">🏆 Sıralama</button>
+<button onclick="git('shop.html')">🛒 Mağaza</button>
+<button onclick="git('support.html')">🆘 Destek</button>
+<button onclick="git('profil.html')">👤 Profil</button>
 </div>
-
-<div id="servers"></div>
 
 <script>
+document.getElementById("nick").innerText =
+localStorage.getItem("nick");
 
-document.getElementById("user").innerText =
-"👤 "+localStorage.getItem("nick");
-
-let servers = JSON.parse(localStorage.getItem("servers")||"[]");
-
-function liste(){
-let html="";
-servers.forEach((s,i)=>{
-html+=`
-<div class="card">
-<h3>${s.name}</h3>
-<p>Durum: ${s.status}</p>
-<p>IP: ${s.ip||"-"}</p>
-
-<button class="start" onclick="ac(${i})">Aç</button>
-<button class="stop" onclick="kapat(${i})">Kapat</button>
-</div>
-`;
-});
-document.getElementById("servers").innerHTML=html;
+function git(x){
+window.location.href=x;
 }
-
-liste();
-
-function olustur(){
-let name=document.getElementById("name").value;
-if(!name) return alert("İsim gir!");
-
-servers.push({
-name,
-status:"Kapalı",
-ip:""
-});
-
-kaydet();
-liste();
-}
-
-function ac(i){
-servers[i].status="Başlatılıyor...";
-liste();
-
-setTimeout(()=>{
-servers[i].status="Açık";
-servers[i].ip="play.siumhost.net";
-kaydet();
-liste();
-},3000);
-}
-
-function kapat(i){
-servers[i].status="Kapatılıyor...";
-liste();
-
-setTimeout(()=>{
-servers[i].status="Kapalı";
-servers[i].ip="";
-kaydet();
-liste();
-},2000);
-}
-
-function kaydet(){
-localStorage.setItem("servers",JSON.stringify(servers));
-}
-
 </script>
 
 </body>
