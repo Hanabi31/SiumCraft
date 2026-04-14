@@ -1,36 +1,223 @@
-<audio id="music" preload="auto"></audio>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SiumCraft</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  font-family:'Orbitron',sans-serif;
+  color:white;
+  overflow-x:hidden;
+}
+
+/* BACKGROUND */
+#bgCanvas{
+  position:fixed;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  z-index:-1;
+  background:linear-gradient(120deg,#0f2027,#203a43,#2c5364);
+}
+
+/* NAVBAR */
+.navbar{
+  position:fixed;
+  width:100%;
+  height:70px;
+  background:rgba(0,0,0,0.9);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 20px;
+  z-index:999;
+}
+
+.logo{color:#00ffcc;font-size:18px;}
+
+.navbar ul{
+  display:flex;
+  list-style:none;
+  flex-wrap:wrap;
+}
+
+.navbar li{margin-left:15px;}
+
+.navbar a{
+  color:white;
+  text-decoration:none;
+  font-size:12px;
+  cursor:pointer;
+}
+
+/* SECTION */
+.section{
+  min-height:100vh;
+  padding-top:90px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+/* HERO */
+.hero h1{font-size:45px}
+.hero p{margin:15px 0}
+
+/* BUTTON */
+.button{
+  background:#00ffcc;
+  padding:10px 20px;
+  border-radius:6px;
+  color:black;
+  margin:8px;
+  display:inline-block;
+  cursor:pointer;
+  font-size:12px;
+  border:none;
+}
+
+/* CARDS */
+.cards{
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.card{
+  background:rgba(0,0,0,0.7);
+  padding:20px;
+  border-radius:10px;
+  width:220px;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+  .hero h1{font-size:30px}
+  .navbar a{font-size:10px}
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="bgCanvas"></canvas>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="logo">SiumCraft</div>
+  <ul>
+    <li><a onclick="go('home')">Ana Sayfa</a></li>
+    <li><a onclick="go('server')">Sunucu</a></li>
+    <li><a onclick="go('shop')">Mağaza</a></li>
+    <li><a onclick="go('rules')">Kurallar</a></li>
+    <li><a onclick="go('contact')">İletişim</a></li>
+  </ul>
+</div>
+
+<!-- HOME -->
+<section id="home" class="section hero">
+  <h1>SiumCraft</h1>
+  <p>Türkiye'nin en iyi Smp sunucusu!</p>
+  <p id="players">Yükleniyor...</p>
+
+  <div>
+    <span class="button" onclick="copyIP()">IP Kopyala</span>
+    <a href="minecraft://connect/siumcraft.aternos.me" class="button">Katıl</a>
+  </div>
+</section>
+
+<!-- SERVER -->
+<section id="server" class="section">
+  <h2>Sunucu Bilgisi</h2>
+  <p>IP: siumcraft.aternos.me</p>
+  <p>Versiyon: 1.20+</p>
+  <p>Mod: Smp + Ekonomi + Rank + BoxPvP</p>
+</section>
+
+<!-- SHOP -->
+<section id="shop" class="section">
+  <h2>Mağaza</h2>
+  <div class="cards">
+    <div class="card"><h3>VIP</h3><p>50₺</p><p>Özel prefix + kit</p></div>
+    <div class="card"><h3>Arşidük</h3><p>300₺</p><p>Daha güçlü avantajlar</p></div>
+    <div class="card"><h3>Gridük</h3><p>500₺</p><p>Tüm özellikler açık</p></div>
+  </div>
+</section>
+
+<!-- RULES -->
+<section id="rules" class="section">
+  <h2>Kurallar</h2>
+  <p>• Küfür yasak</p>
+  <p>• Hile yasak</p>
+  <p>• Saygılı olun</p>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section">
+  <h2>İletişim</h2>
+  <p>Discord: discord.gg/siumcraft</p>
+</section>
 
 <script>
-const audio = document.getElementById("music");
-
-// DAHA SAĞLAM MÜZİK (çalışan link)
-const songs = [
-"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
-];
-
-let index = 0;
-
-// BAŞLAT
-function startMusic(){
-  audio.src = songs[index];
-  audio.volume = 0.5;
-  audio.play().catch(()=>{});
+// SCROLL
+function go(id){
+  document.getElementById(id).scrollIntoView({behavior:"smooth"});
 }
 
-// OTOMATİK GEÇİŞ
-audio.addEventListener("ended", () => {
-  index = (index + 1) % songs.length;
-  startMusic();
+// PARTICLES
+const canvas=document.getElementById("bgCanvas");
+const ctx=canvas.getContext("2d");
+
+function resize(){
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+}
+resize();
+window.addEventListener("resize",resize);
+
+let p=[];
+for(let i=0;i<120;i++){
+  p.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vx:Math.random()*0.3,vy:Math.random()*0.3});
+}
+
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  p.forEach(e=>{
+    e.x+=e.vx;
+    e.y+=e.vy;
+    if(e.x>canvas.width)e.x=0;
+    if(e.y>canvas.height)e.y=0;
+    ctx.fillStyle="#00ffcc";
+    ctx.fillRect(e.x,e.y,2,2);
+  });
+  requestAnimationFrame(draw);
+}
+draw();
+
+// API
+fetch("https://api.mcsrvstat.us/2/siumcraft.aternos.me")
+.then(r=>r.json())
+.then(d=>{
+  document.getElementById("players").innerText =
+    d.online ? "🟢 "+d.players.online+" oyuncu online" : "🔴 Sunucu kapalı";
 });
 
-// HER TÜRLÜ TIKLAMADA BAŞLAT (MOBİL FIX)
-function unlockMusic(){
-  startMusic();
-  document.removeEventListener("click", unlockMusic);
-  document.removeEventListener("touchstart", unlockMusic);
+// COPY
+function copyIP(){
+  navigator.clipboard.writeText("siumcraft.aternos.me");
+  alert("IP kopyalandı!");
 }
-
-document.addEventListener("click", unlockMusic);
-document.addEventListener("touchstart", unlockMusic);
 </script>
+
+</body>
+</html>
